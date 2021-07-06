@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primaryColor">#FFFF941A</color>
+    <color name="grey">#FF585666</color>
+    <color name="delete">#FFE83F5B</color>
+    <color name="secundary">#FF585666</color>
+    <color name="heading">#FF585666</color>
+    <color name="body">#FF706E7A</color>
+    <color name="inputs"> #FFB1B0B8</color>
+    <color name="stroke"> #FFE3E3E5</color>
+    <color name="boxes">#FFFAFAFC</color>
+    <color name="background">#FFFFFFFF</color>
+</resources>
