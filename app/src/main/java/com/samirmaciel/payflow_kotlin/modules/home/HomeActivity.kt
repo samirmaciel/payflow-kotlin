@@ -1,4 +1,4 @@
-package com.samirmaciel.payflow_kotlin
+package com.samirmaciel.payflow_kotlin.modules.home
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

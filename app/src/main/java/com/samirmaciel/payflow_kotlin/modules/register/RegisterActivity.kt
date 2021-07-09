@@ -1,11 +1,10 @@
-package com.samirmaciel.payflow_kotlin
+package com.samirmaciel.payflow_kotlin.modules.register
 
-import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
-import android.widget.EditText
 import com.google.android.material.textfield.TextInputEditText
+import com.samirmaciel.payflow_kotlin.shared.common.Money
 import com.samirmaciel.payflow_kotlin.databinding.ActivityRegisterBinding
 
 class RegisterActivity : AppCompatActivity() {
@@ -26,6 +25,14 @@ class RegisterActivity : AppCompatActivity() {
         inputWallet = binding.inputTextWallet.editText as TextInputEditText
         inputBarcode = binding.inputTextBarcode.editText as TextInputEditText
         buttonRegister = binding.buttonRegister as Button
+        inputWallet.addTextChangedListener(
+            Money(
+                inputWallet
+            )
+        )
+
+
+
 
     }
 

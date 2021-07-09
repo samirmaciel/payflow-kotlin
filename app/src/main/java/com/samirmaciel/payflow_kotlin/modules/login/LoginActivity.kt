@@ -1,9 +1,10 @@
-package com.samirmaciel.payflow_kotlin
+package com.samirmaciel.payflow_kotlin.modules.login
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.samirmaciel.payflow_kotlin.databinding.ActivityLoginBinding
+import com.samirmaciel.payflow_kotlin.modules.home.HomeActivity
 
 
 class LoginActivity : AppCompatActivity() {

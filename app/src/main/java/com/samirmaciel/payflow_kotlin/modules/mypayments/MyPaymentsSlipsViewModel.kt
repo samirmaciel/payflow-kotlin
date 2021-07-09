@@ -1,4 +1,4 @@
-package com.samirmaciel.payflow_kotlin
+package com.samirmaciel.payflow_kotlin.modules.mypayments
 
 import androidx.lifecycle.ViewModel
 
