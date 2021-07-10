@@ -3,9 +3,14 @@ package com.samirmaciel.payflow_kotlin.modules.register
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.textfield.TextInputEditText
-import com.samirmaciel.payflow_kotlin.shared.common.Money
+import com.samirmaciel.payflow_kotlin.shared.common.CurrencyTextWatcher
 import com.samirmaciel.payflow_kotlin.databinding.ActivityRegisterBinding
+import com.samirmaciel.payflow_kotlin.shared.data.AppDataBase
+import com.samirmaciel.payflow_kotlin.shared.model.PaymentSlipDataSource
+import com.samirmaciel.payflow_kotlin.shared.model.datarepository.PaymentSlipRepository
+import com.samirmaciel.payflow_kotlin.shared.model.datarepository.RegistrationViewParams
 
 class RegisterActivity : AppCompatActivity() {
     private lateinit var binding : ActivityRegisterBinding
@@ -14,6 +19,9 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var inputWallet : TextInputEditText
     private lateinit var inputBarcode : TextInputEditText
     private lateinit var buttonRegister : Button
+
+    private lateinit var viewModel : RegistrationViewModel
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,10 +34,13 @@ class RegisterActivity : AppCompatActivity() {
         inputBarcode = binding.inputTextBarcode.editText as TextInputEditText
         buttonRegister = binding.buttonRegister as Button
         inputWallet.addTextChangedListener(
-            Money(
+            CurrencyTextWatcher(
                 inputWallet
             )
         )
+
+        val database = AppDataBase.getDatabase(this)
+        viewModel = ViewModelProvider(this, RegistrationViewModel.RegistrationViewModelFactory(PaymentSlipDataSource(database.PaymentSlipDao()))).get(RegistrationViewModel::class.java)
 
 
 
@@ -81,10 +92,17 @@ class RegisterActivity : AppCompatActivity() {
         super.onStart()
 
         buttonRegister.setOnClickListener(){
-            validateName()
-            validateDueDate()
-            validateWallet()
-            validateBarCode()
+            if(validateName() && validateDueDate()
+                && validateWallet()
+                && validateBarCode()){
+                val registrationViewParams : RegistrationViewParams = RegistrationViewParams(name = inputName.text.toString(),
+                    dueDate = inputDuedate.text.toString(),
+                    value = inputWallet.text.toString(),
+                    barcode = inputBarcode.text.toString())
+
+                viewModel.savePaymentSlip(registrationViewParams)
+
+            }
         }
 
 
