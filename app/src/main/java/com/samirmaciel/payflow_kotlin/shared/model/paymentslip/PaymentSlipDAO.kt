@@ -9,8 +9,8 @@ import androidx.room.Query
 @Dao
 interface PaymentSlipDAO{
 
-    @Query("SELECT * FROM paymentslipentity")
-    fun findAll(): List<PaymentSlipEntity>
+    @Query("SELECT * FROM PaymentSlipEntity")
+    suspend fun findAll(): List<PaymentSlipEntity>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun save(paymentEntity: PaymentSlipEntity)

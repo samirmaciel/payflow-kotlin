@@ -1,10 +1,18 @@
 package com.samirmaciel.payflow_kotlin.modules.home
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.samirmaciel.payflow_kotlin.R
 import com.samirmaciel.payflow_kotlin.databinding.ActivityHomeBinding
+import com.samirmaciel.payflow_kotlin.databinding.PaymentslipItemBinding
+import com.samirmaciel.payflow_kotlin.modules.mypayments.MyPaymentsSlipsFragment
+import com.samirmaciel.payflow_kotlin.modules.register.RegisterActivity
+import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : AppCompatActivity() {
+
+    private var index : Int = 0
 
     private lateinit var binding : ActivityHomeBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -12,9 +20,15 @@ class HomeActivity : AppCompatActivity() {
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        if(savedInstanceState == null){
+            supportFragmentManager.beginTransaction()
+                .add(R.id.homeContainer, MyPaymentsSlipsFragment())
+                .commitAllowingStateLoss()
+        }
 
-        var count : Int = 14
+        buttonAdd.setOnClickListener{
+            startActivity(Intent(this,  RegisterActivity::class.java))
+        }
 
-        binding.textCardCadastrados.text = "Você possui $count boletos cadastrados para pagar"
     }
 }

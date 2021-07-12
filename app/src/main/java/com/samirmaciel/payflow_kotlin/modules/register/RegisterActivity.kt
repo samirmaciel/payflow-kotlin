@@ -2,14 +2,15 @@ package com.samirmaciel.payflow_kotlin.modules.register
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.observe
 import com.google.android.material.textfield.TextInputEditText
 import com.samirmaciel.payflow_kotlin.shared.common.CurrencyTextWatcher
 import com.samirmaciel.payflow_kotlin.databinding.ActivityRegisterBinding
 import com.samirmaciel.payflow_kotlin.shared.data.AppDataBase
-import com.samirmaciel.payflow_kotlin.shared.model.PaymentSlipDataSource
-import com.samirmaciel.payflow_kotlin.shared.model.datarepository.PaymentSlipRepository
+import com.samirmaciel.payflow_kotlin.shared.data.PaymentSlipDataSource
 import com.samirmaciel.payflow_kotlin.shared.model.datarepository.RegistrationViewParams
 
 class RegisterActivity : AppCompatActivity() {
@@ -92,18 +93,24 @@ class RegisterActivity : AppCompatActivity() {
         super.onStart()
 
         buttonRegister.setOnClickListener(){
-            if(validateName() && validateDueDate()
-                && validateWallet()
-                && validateBarCode()){
-                val registrationViewParams : RegistrationViewParams = RegistrationViewParams(name = inputName.text.toString(),
-                    dueDate = inputDuedate.text.toString(),
-                    value = inputWallet.text.toString(),
-                    barcode = inputBarcode.text.toString())
+//            if(validateName() && validateDueDate()
+//                && validateWallet()
+//                && validateBarCode()){
+//                val registrationViewParams : RegistrationViewParams = RegistrationViewParams(name = inputName.text.toString(),
+//                    dueDate = inputDuedate.text.toString(),
+//                    value = inputWallet.text.toString(),
+//                    barcode = inputBarcode.text.toString())
+//
+//                viewModel.savePaymentSlip(registrationViewParams)
+//
+//            }
+           viewModel.findAllPaymentSlip()
 
-                viewModel.savePaymentSlip(registrationViewParams)
-
-            }
         }
+
+        viewModel.paymentList.observe(this, { lives ->
+            Log.d("OBSERVE", "onStart: " + lives.size)
+        })
 
 
     }

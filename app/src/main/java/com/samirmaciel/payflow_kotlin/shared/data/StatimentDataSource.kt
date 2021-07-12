@@ -1,4 +1,4 @@
-package com.samirmaciel.payflow_kotlin.shared.model
+package com.samirmaciel.payflow_kotlin.shared.data
 
 import com.samirmaciel.payflow_kotlin.shared.model.datarepository.RegistrationViewParams
 import com.samirmaciel.payflow_kotlin.shared.model.datarepository.StatimentRepository

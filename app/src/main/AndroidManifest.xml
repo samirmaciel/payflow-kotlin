@@ -11,14 +11,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Payflowkotlin">
-        <activity android:name=".modules.register.RegisterActivity">
+        <activity android:name=".modules.register.RegisterActivity"/>
+        <activity android:name=".modules.splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".modules.splash.SplashActivity" />
         <activity android:name=".modules.home.HomeActivity"></activity>
         <activity android:name=".modules.login.LoginActivity" />
     </application>

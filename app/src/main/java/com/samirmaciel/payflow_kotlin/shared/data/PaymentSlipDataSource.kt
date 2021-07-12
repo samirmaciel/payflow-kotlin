@@ -1,4 +1,4 @@
-package com.samirmaciel.payflow_kotlin.shared.model
+package com.samirmaciel.payflow_kotlin.shared.data
 
 import com.samirmaciel.payflow_kotlin.shared.model.datarepository.PaymentSlipRepository
 import com.samirmaciel.payflow_kotlin.shared.model.datarepository.RegistrationViewParams
@@ -15,11 +15,11 @@ class PaymentSlipDataSource( private val paymentSlipDao : PaymentSlipDAO ) : Pay
         return paymentSlipDao.findById(id).toPaymentSlip()
     }
 
-    override fun findAll(): List<PaymentSlip> {
+    override suspend fun findAll(): List<PaymentSlip> {
         val paymentSlipList : List<PaymentSlipEntity> = paymentSlipDao.findAll()
-        var payList : List<PaymentSlip> = listOf()
+        var payList : MutableList<PaymentSlip> = ArrayList()
         for (pay in paymentSlipList){
-            payList.toMutableList().add(pay.toPaymentSlip())
+            payList.add(pay.toPaymentSlip())
         }
         return payList
     }

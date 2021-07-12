@@ -1,5 +1,6 @@
 package com.samirmaciel.payflow_kotlin.modules.register
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -9,8 +10,9 @@ import com.samirmaciel.payflow_kotlin.shared.model.paymentslip.PaymentSlip
 import kotlinx.coroutines.launch
 
 class RegistrationViewModel(
-    private val paymentSlipRepository : PaymentSlipRepository
-) : ViewModel() {
+    private val paymentSlipRepository : PaymentSlipRepository) : ViewModel() {
+
+    var paymentList = MutableLiveData<List<PaymentSlip>>()
 
 
     fun savePaymentSlip(registrationViewParams: RegistrationViewParams){
@@ -20,8 +22,11 @@ class RegistrationViewModel(
 
     }
 
-    fun findAllPaymentSlip() : List<PaymentSlip>{
-        return paymentSlipRepository.findAll()
+    fun findAllPaymentSlip(){
+        viewModelScope.launch {
+            paymentList.postValue((paymentSlipRepository.findAll()))
+        }
+
     }
 
 

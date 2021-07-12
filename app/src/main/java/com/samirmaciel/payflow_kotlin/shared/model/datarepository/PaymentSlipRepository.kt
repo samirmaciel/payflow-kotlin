@@ -8,7 +8,7 @@ interface PaymentSlipRepository {
 
     fun findById(id: Long) : PaymentSlip
 
-    fun findAll() : List<PaymentSlip>
+    suspend fun findAll() : List<PaymentSlip>
 
     fun deleteById(id : Long)
 
