@@ -6,11 +6,11 @@ interface PaymentSlipRepository {
 
     suspend fun save(registrationViewParams : RegistrationViewParams)
 
-    fun findById(id: Long) : PaymentSlip
+    suspend fun findById(id: Long) : PaymentSlip
 
-    suspend fun findAll() : List<PaymentSlip>
+    suspend fun findAll() : MutableList<PaymentSlip>
 
-    fun deleteById(id : Long)
+    suspend fun deleteById(id : Long)
 
 
 }

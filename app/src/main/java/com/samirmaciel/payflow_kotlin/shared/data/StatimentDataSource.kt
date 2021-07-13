@@ -11,11 +11,11 @@ class StatimentDataSource( private val statimentDao : StatimentDAO) : StatimentR
         statimentDao.save(statimentEntity)
     }
 
-    override fun findById(id: Long): Statiment {
+    override suspend fun findById(id: Long): Statiment {
         return statimentDao.findById(id).toStatiment()
     }
 
-    override fun findAll(): List<Statiment> {
+    override suspend fun findAll(): List<Statiment> {
         val statimentEntityList = statimentDao.findAll()
         var statimentList : List<Statiment> = listOf()
         for (statiment in statimentEntityList){
@@ -24,7 +24,7 @@ class StatimentDataSource( private val statimentDao : StatimentDAO) : StatimentR
         return statimentList
     }
 
-    override fun deleteById(id: Long) {
+    override suspend fun deleteById(id: Long) {
         statimentDao.deleteById(id)
     }
 }

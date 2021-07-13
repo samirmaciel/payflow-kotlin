@@ -10,7 +10,7 @@ import androidx.room.Query
 interface PaymentSlipDAO{
 
     @Query("SELECT * FROM PaymentSlipEntity")
-    suspend fun findAll(): List<PaymentSlipEntity>
+    suspend fun findAll(): MutableList<PaymentSlipEntity>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun save(paymentEntity: PaymentSlipEntity)
@@ -19,9 +19,9 @@ interface PaymentSlipDAO{
     suspend fun deleteAll()
 
     @Query("SELECT * FROM paymentslipentity WHERE id = :id")
-    fun findById(id : Long) : PaymentSlipEntity
+    suspend fun findById(id : Long) : PaymentSlipEntity
 
     @Query("DELETE FROM paymentslipentity WHERE id = :id")
-    fun deleteById(id : Long)
+    suspend fun deleteById(id : Long)
 
 }

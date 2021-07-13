@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 
 class MyPaymentsSlipsViewModel(private val paymentSlipRepository: PaymentSlipRepository) : ViewModel() {
 
-    val paymentslipList = MutableLiveData<List<PaymentSlip>>()
+    val paymentslipList = MutableLiveData<MutableList<PaymentSlip>>()
 
     private var index = 0
 
@@ -24,9 +24,13 @@ class MyPaymentsSlipsViewModel(private val paymentSlipRepository: PaymentSlipRep
 
     }
 
-    fun test(){
-        index++
-        Log.d("VIEWMODELTEST", "test: " + index)
+    fun deleteById(id : Long){
+        viewModelScope.launch {
+            paymentSlipRepository.deleteById(id)
+            findAllPaymentSlip()
+        }
+
+
     }
 
 

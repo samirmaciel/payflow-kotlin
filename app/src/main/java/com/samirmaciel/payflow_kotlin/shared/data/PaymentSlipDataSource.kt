@@ -11,11 +11,11 @@ class PaymentSlipDataSource( private val paymentSlipDao : PaymentSlipDAO ) : Pay
         paymentSlipDao.save(paymentSlipEntity)
     }
 
-    override fun findById(id: Long): PaymentSlip {
+    override suspend fun findById(id: Long): PaymentSlip {
         return paymentSlipDao.findById(id).toPaymentSlip()
     }
 
-    override suspend fun findAll(): List<PaymentSlip> {
+    override suspend fun findAll(): MutableList<PaymentSlip> {
         val paymentSlipList : List<PaymentSlipEntity> = paymentSlipDao.findAll()
         var payList : MutableList<PaymentSlip> = ArrayList()
         for (pay in paymentSlipList){
@@ -24,7 +24,7 @@ class PaymentSlipDataSource( private val paymentSlipDao : PaymentSlipDAO ) : Pay
         return payList
     }
 
-    override fun deleteById(id: Long) {
+    override suspend fun deleteById(id: Long) {
         paymentSlipDao.deleteById(id)
     }
 }

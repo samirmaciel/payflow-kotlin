@@ -6,14 +6,14 @@ import androidx.room.*
 interface StatimentDAO {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun save(statiment : StatimentEntity)
+    suspend fun save(statiment : StatimentEntity)
 
     @Query("SELECT * FROM statimententity")
-    fun findAll() : List<StatimentEntity>
+    suspend fun findAll() : List<StatimentEntity>
 
     @Query("SELECT * FROM statimententity WHERE id = :id")
-    fun findById(id : Long) : StatimentEntity
+    suspend fun findById(id : Long) : StatimentEntity
 
     @Query ("DELETE FROM statimententity WHERE id = :id")
-    fun deleteById(id : Long)
+    suspend fun deleteById(id : Long)
 }
