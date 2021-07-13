@@ -1,5 +1,6 @@
 package com.samirmaciel.payflow_kotlin.modules.mypayments
 
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -13,12 +14,19 @@ class MyPaymentsSlipsViewModel(private val paymentSlipRepository: PaymentSlipRep
 
     val paymentslipList = MutableLiveData<List<PaymentSlip>>()
 
+    private var index = 0
+
 
     fun findAllPaymentSlip(){
         viewModelScope.launch {
             paymentslipList.postValue((paymentSlipRepository.findAll()))
         }
 
+    }
+
+    fun test(){
+        index++
+        Log.d("VIEWMODELTEST", "test: " + index)
     }
 
 

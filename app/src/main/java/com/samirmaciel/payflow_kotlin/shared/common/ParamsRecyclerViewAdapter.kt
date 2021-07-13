@@ -10,11 +10,10 @@ import com.samirmaciel.payflow_kotlin.shared.model.paymentslip.PaymentSlip
 import com.samirmaciel.payflow_kotlin.shared.model.statiment.Statiment
 import kotlinx.android.synthetic.main.paymentslip_item.view.*
 
-class ParamsRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ParamsRecyclerViewAdapter(private val onItemClicked : (PaymentSlip) -> Unit) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 
-    private var statimentList : List<Statiment> = ArrayList()
-    private var paymentslipList : List<PaymentSlip> = ArrayList()
+    private var itemList : List<PaymentSlip> = ArrayList()
 
 
 
@@ -26,11 +25,7 @@ class ParamsRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
     }
 
     override fun getItemCount(): Int {
-        if(paymentslipList.isEmpty()){
-            return statimentList.size
-        }
-
-        return paymentslipList.size
+        return itemList.size
 
     }
 
@@ -41,19 +36,18 @@ class ParamsRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
         private val dueDate = itemView.textDueDate
         private val value = itemView.textValue
 
-        fun bind(paymentslip : PaymentSlip?, statiment : Statiment?){
+        fun bind(onItemClicked: (PaymentSlip) -> kotlin.Unit, paymentslip : PaymentSlip){
 
-            if(paymentslip != null){
 
-                name.text = paymentslip.name
-                dueDate.text = paymentslip.dueDate
-                value.text = paymentslip.value
+            name.text = paymentslip.name
+            dueDate.text = paymentslip.dueDate
+            value.text = paymentslip.value
 
-            }else{
 
-                name.text = statiment?.name
-                dueDate.text = statiment?.dueDate
-                value.text = statiment?.value
+            itemView.setOnClickListener{
+
+                onItemClicked(paymentslip)
+
             }
 
         }
@@ -65,21 +59,15 @@ class ParamsRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
         when(holder){
 
             is MyViewHolder -> {
-                if(paymentslipList.isEmpty()){
-                    holder.bind(statiment = statimentList.get(position), paymentslip = null)
-                }else{
-                    holder.bind(paymentslip = paymentslipList.get(position), statiment = null)
-                }
+
+                holder.bind(onItemClicked, itemList[position])
             }
         }
 
     }
 
     fun setPaymentList(list : List<PaymentSlip>){
-        this.paymentslipList = list
+        this.itemList = list
     }
 
-    fun setStatimentList(list : List<Statiment>){
-        this.statimentList = list
-    }
 }

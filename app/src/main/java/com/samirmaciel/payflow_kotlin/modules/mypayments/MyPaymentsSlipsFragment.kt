@@ -2,6 +2,7 @@ package com.samirmaciel.payflow_kotlin.modules.mypayments
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,13 +11,14 @@ import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.samirmaciel.payflow_kotlin.R
+import com.samirmaciel.payflow_kotlin.shared.common.BottomSheetDialog
 import com.samirmaciel.payflow_kotlin.shared.common.ParamsRecyclerViewAdapter
 import com.samirmaciel.payflow_kotlin.shared.data.AppDataBase
 import com.samirmaciel.payflow_kotlin.shared.data.PaymentSlipDataSource
 import com.samirmaciel.payflow_kotlin.shared.model.paymentslip.PaymentSlip
 import kotlinx.android.synthetic.main.my_payments_slips_fragment.*
 
-class MyPaymentsSlipsFragment : Fragment() {
+class MyPaymentsSlipsFragment : Fragment(){
 
     private lateinit var paramsAdapter : ParamsRecyclerViewAdapter
 
@@ -46,6 +48,11 @@ class MyPaymentsSlipsFragment : Fragment() {
     override fun onStart() {
         super.onStart()
 
+        textMyPayments.setOnClickListener{
+            viewModel.test()
+        }
+
+
         viewModel.paymentslipList.observe(this, { list ->
             paramsAdapter.setPaymentList(list)
             paramsAdapter.notifyDataSetChanged()
@@ -53,12 +60,26 @@ class MyPaymentsSlipsFragment : Fragment() {
 
     }
 
+
+
     private fun initRecyclerView(){
 
-        this.paramsAdapter = ParamsRecyclerViewAdapter()
+        this.paramsAdapter = ParamsRecyclerViewAdapter{paymentSlip ->
+            val bottomSheet = BottomSheetDialog()
+            val bundle = Bundle()
+            bundle.putString("name", paymentSlip.name)
+            bundle.putString("value", paymentSlip.value)
+            bundle.putLong("id", paymentSlip.id)
+            bottomSheet.arguments = bundle
+
+            bottomSheet.show(childFragmentManager, "BottomSheetDialog")
+
+        }
         recyclerViewPayments.layoutManager = LinearLayoutManager(requireContext())
         recyclerViewPayments.adapter = this.paramsAdapter
 
     }
+
+
 
 }

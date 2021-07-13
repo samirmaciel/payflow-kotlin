@@ -33,7 +33,7 @@ class RegisterActivity : AppCompatActivity() {
         inputDuedate = binding.inputTextDueDate.editText as TextInputEditText
         inputWallet = binding.inputTextWallet.editText as TextInputEditText
         inputBarcode = binding.inputTextBarcode.editText as TextInputEditText
-        buttonRegister = binding.buttonRegister as Button
+        buttonRegister = binding.buttonRegister
         inputWallet.addTextChangedListener(
             CurrencyTextWatcher(
                 inputWallet
