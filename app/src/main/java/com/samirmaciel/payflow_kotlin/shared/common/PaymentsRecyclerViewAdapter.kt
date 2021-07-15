@@ -10,7 +10,7 @@ import com.samirmaciel.payflow_kotlin.shared.model.paymentslip.PaymentSlip
 import com.samirmaciel.payflow_kotlin.shared.model.statiment.Statiment
 import kotlinx.android.synthetic.main.paymentslip_item.view.*
 
-class ParamsRecyclerViewAdapter(private val onItemClicked : (PaymentSlip) -> Unit) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class PaymentsRecyclerViewAdapter(private val onItemClicked : (PaymentSlip) -> Unit) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 
     private var itemList : List<PaymentSlip> = ArrayList()
@@ -66,7 +66,7 @@ class ParamsRecyclerViewAdapter(private val onItemClicked : (PaymentSlip) -> Uni
 
     }
 
-    fun setPaymentList(list : List<PaymentSlip>){
+    fun setItemList(list : List<PaymentSlip>){
         this.itemList = list
     }
 

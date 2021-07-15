@@ -8,6 +8,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.samirmaciel.payflow_kotlin.R
+import com.samirmaciel.payflow_kotlin.modules.home.HomeViewModel
 import com.samirmaciel.payflow_kotlin.modules.mypayments.MyPaymentsSlipsViewModel
 import com.samirmaciel.payflow_kotlin.shared.data.AppDataBase
 import com.samirmaciel.payflow_kotlin.shared.data.PaymentSlipDataSource
@@ -16,8 +17,11 @@ import kotlinx.android.synthetic.main.bottomsheet.*
 
 class BottomSheetDialog : BottomSheetDialogFragment() {
 
+    private val homeViewModel : HomeViewModel by activityViewModels()
     private val viewModelPayments : MyPaymentsSlipsViewModel by activityViewModels()
-    private lateinit var viewModel : BottomSheetDialogViewModel
+    private val viewModel : BottomSheetDialogViewModel by activityViewModels({
+        BottomSheetDialogViewModel.BottomSheetDialogViewModelFactory(PaymentSlipDataSource(AppDataBase.getDatabase(requireContext()).PaymentSlipDao()), StatimentDataSource(AppDataBase.getDatabase(requireContext()).StatimentDao()))
+    })
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -27,7 +31,6 @@ class BottomSheetDialog : BottomSheetDialogFragment() {
     override fun onStart() {
         super.onStart()
 
-        viewModel = ViewModelProvider(this, BottomSheetDialogViewModel.BottomSheetDialogViewModelFactory(PaymentSlipDataSource(AppDataBase.getDatabase(requireContext()).PaymentSlipDao()), StatimentDataSource(AppDataBase.getDatabase(requireContext()).StatimentDao()))).get(BottomSheetDialogViewModel::class.java)
 
         val name = arguments?.get("name")
         val value = arguments?.get("value")
@@ -38,6 +41,7 @@ class BottomSheetDialog : BottomSheetDialogFragment() {
 
         buttonYes.setOnClickListener{
             viewModel.saveStatiment(id)
+            viewModelPayments.deleteById(id)
             dismiss()
         }
         buttonNotYet.setOnClickListener{
@@ -46,6 +50,7 @@ class BottomSheetDialog : BottomSheetDialogFragment() {
 
         buttonDelete.setOnClickListener{
             viewModelPayments.deleteById(id)
+            homeViewModel.findAllPaymentSlip()
             dismiss()
         }
 

@@ -144,12 +144,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:maxLines="1"
-                        android:maxLength="15"
+                        android:maxLength="8"
+                        android:inputType="date"
                         android:textColorHint="@color/inputs"
                         android:fontFamily="@font/inter"
                         android:textColor="@color/body"
                         android:textSize="15sp"
-                        android:hint="Vencimento"/>
+                        android:hint="01/01/21"/>
 
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
@@ -202,11 +203,12 @@
                         android:layout_height="50dp"
                         android:maxLines="1"
                         android:maxLength="15"
+                        android:inputType="number"
                         android:textColorHint="@color/inputs"
                         android:fontFamily="@font/inter"
                         android:textColor="@color/body"
                         android:textSize="15sp"
-                        android:hint="Valor"/>
+                        android:hint="R$ 0,00"/>
 
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>

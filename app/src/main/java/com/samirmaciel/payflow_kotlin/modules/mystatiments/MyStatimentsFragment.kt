@@ -6,16 +6,30 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.Toast
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.observe
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import com.samirmaciel.payflow_kotlin.R
+import com.samirmaciel.payflow_kotlin.shared.common.StatimentsRecyclerViewAdapter
+import com.samirmaciel.payflow_kotlin.shared.data.AppDataBase
+import com.samirmaciel.payflow_kotlin.shared.data.StatimentDataSource
+import kotlinx.android.synthetic.main.my_statiments_fragment.*
 
 class MyStatimentsFragment : Fragment() {
+
+    private val viewModel : MyStatimentsViewModel by activityViewModels({
+        MyStatimentsViewModel.StatimentViewModelFactory(StatimentDataSource(AppDataBase.getDatabase(requireContext()).StatimentDao()))
+    })
+    private lateinit var statimentsAdapter : StatimentsRecyclerViewAdapter
 
     companion object {
         fun newInstance() =
             MyStatimentsFragment()
     }
 
-    private lateinit var viewModel: MyStatimentsViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,8 +40,33 @@ class MyStatimentsFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(MyStatimentsViewModel::class.java)
-        // TODO: Use the ViewModel
+        initRecycler()
     }
+
+    override fun onStart() {
+        super.onStart()
+
+
+
+        viewModel.statimentList.observe(this, {list ->
+            countStatiments(list.size)
+            statimentsAdapter.setItemList(list)
+            statimentsAdapter.notifyDataSetChanged()
+        })
+
+    }
+
+    private fun initRecycler() {
+        this.statimentsAdapter = StatimentsRecyclerViewAdapter{
+            Snackbar.make(requireView(), it.name, Snackbar.LENGTH_SHORT).show()
+        }
+        recyclerViewStatiments.layoutManager = LinearLayoutManager(requireContext())
+        recyclerViewStatiments.adapter = this.statimentsAdapter
+    }
+
+    private fun countStatiments(count : Int){
+        textTotalStatiments.text = "$count pagos no total"
+    }
+
 
 }

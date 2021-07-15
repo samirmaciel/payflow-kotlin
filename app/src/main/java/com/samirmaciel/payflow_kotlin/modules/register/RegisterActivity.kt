@@ -1,14 +1,17 @@
 package com.samirmaciel.payflow_kotlin.modules.register
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
-import androidx.lifecycle.ViewModelProvider
+import androidx.activity.viewModels
 import androidx.lifecycle.observe
 import com.google.android.material.textfield.TextInputEditText
-import com.samirmaciel.payflow_kotlin.shared.common.CurrencyTextWatcher
 import com.samirmaciel.payflow_kotlin.databinding.ActivityRegisterBinding
+import com.samirmaciel.payflow_kotlin.modules.home.HomeActivity
+import com.samirmaciel.payflow_kotlin.shared.common.DateTextWatcher
+import com.samirmaciel.payflow_kotlin.shared.common.MoneyTextWatcher
 import com.samirmaciel.payflow_kotlin.shared.data.AppDataBase
 import com.samirmaciel.payflow_kotlin.shared.data.PaymentSlipDataSource
 import com.samirmaciel.payflow_kotlin.shared.model.datarepository.RegistrationViewParams
@@ -21,7 +24,9 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var inputBarcode : TextInputEditText
     private lateinit var buttonRegister : Button
 
-    private lateinit var viewModel : RegistrationViewModel
+    private val viewModel : RegistrationViewModel by viewModels({
+        RegistrationViewModel.RegistrationViewModelFactory(PaymentSlipDataSource(AppDataBase.getDatabase(this).PaymentSlipDao()))
+    })
 
 
 
@@ -35,13 +40,16 @@ class RegisterActivity : AppCompatActivity() {
         inputBarcode = binding.inputTextBarcode.editText as TextInputEditText
         buttonRegister = binding.buttonRegister
         inputWallet.addTextChangedListener(
-            CurrencyTextWatcher(
+            MoneyTextWatcher(
                 inputWallet
             )
         )
 
-        val database = AppDataBase.getDatabase(this)
-        viewModel = ViewModelProvider(this, RegistrationViewModel.RegistrationViewModelFactory(PaymentSlipDataSource(database.PaymentSlipDao()))).get(RegistrationViewModel::class.java)
+        inputDuedate.addTextChangedListener(DateTextWatcher(
+                inputDuedate
+        ))
+
+
 
 
 
@@ -93,18 +101,19 @@ class RegisterActivity : AppCompatActivity() {
         super.onStart()
 
         buttonRegister.setOnClickListener(){
-//            if(validateName() && validateDueDate()
-//                && validateWallet()
-//                && validateBarCode()){
-//                val registrationViewParams : RegistrationViewParams = RegistrationViewParams(name = inputName.text.toString(),
-//                    dueDate = inputDuedate.text.toString(),
-//                    value = inputWallet.text.toString(),
-//                    barcode = inputBarcode.text.toString())
-//
-//                viewModel.savePaymentSlip(registrationViewParams)
-//
-//            }
-           viewModel.findAllPaymentSlip()
+            if(validateName() && validateDueDate()
+                && validateWallet()
+                && validateBarCode()){
+                val registrationViewParams : RegistrationViewParams = RegistrationViewParams(name = inputName.text.toString(),
+                    dueDate = inputDuedate.text.toString(),
+                    value = inputWallet.text.toString(),
+                    barcode = inputBarcode.text.toString())
+
+                viewModel.savePaymentSlip(registrationViewParams)
+            }
+            val intent = Intent(this, HomeActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
 
         }
 

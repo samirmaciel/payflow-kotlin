@@ -1,6 +1,5 @@
 package com.samirmaciel.payflow_kotlin.modules.mypayments
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -12,15 +11,15 @@ import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.samirmaciel.payflow_kotlin.R
 import com.samirmaciel.payflow_kotlin.modules.bottomsheetdialog.BottomSheetDialog
-import com.samirmaciel.payflow_kotlin.shared.common.ParamsRecyclerViewAdapter
+import com.samirmaciel.payflow_kotlin.shared.common.PaymentsRecyclerViewAdapter
 import com.samirmaciel.payflow_kotlin.shared.data.AppDataBase
 import com.samirmaciel.payflow_kotlin.shared.data.PaymentSlipDataSource
 import kotlinx.android.synthetic.main.my_payments_slips_fragment.*
-import kotlin.math.log10
+
 
 class MyPaymentsSlipsFragment : Fragment(){
 
-    private lateinit var paramsAdapter : ParamsRecyclerViewAdapter
+    private lateinit var paymentsAdapter : PaymentsRecyclerViewAdapter
 
 
     companion object {
@@ -43,7 +42,7 @@ class MyPaymentsSlipsFragment : Fragment(){
         //viewModel = ViewModelProvider(this, MyPaymentsSlipsViewModel.PaymenteViewModelFactory(PaymentSlipDataSource(AppDataBase.getDatabase(requireContext()).PaymentSlipDao()))).get(MyPaymentsSlipsViewModel::class.java)
 
         initRecyclerView()
-        viewModel.findAllPaymentSlip()
+
 
     }
 
@@ -51,33 +50,16 @@ class MyPaymentsSlipsFragment : Fragment(){
         super.onStart()
 
         viewModel.paymentslipList.observe(this, { list ->
-            paramsAdapter.setPaymentList(list)
-            paramsAdapter.notifyDataSetChanged()
+            paymentsAdapter.setItemList(list)
+            paymentsAdapter.notifyDataSetChanged()
         })
 
     }
 
-    override fun onHiddenChanged(hidden: Boolean) {
-        super.onHiddenChanged(hidden)
-        Log.d("HIDDEN", "onHiddenChanged: ")
-    }
-
-    override fun onPause() {
-        super.onPause()
-        Log.d("PAUSE", "onPause: ")
-    }
-
-    override fun onResume() {
-        super.onResume()
-        Log.d("RESUME", "onResume: ")
-    }
-
-
-
 
     private fun initRecyclerView(){
 
-        this.paramsAdapter = ParamsRecyclerViewAdapter{paymentSlip ->
+        this.paymentsAdapter = PaymentsRecyclerViewAdapter{ paymentSlip ->
             val bottomSheet = BottomSheetDialog()
             val bundle = Bundle()
             bundle.putString("name", paymentSlip.name)
@@ -89,7 +71,7 @@ class MyPaymentsSlipsFragment : Fragment(){
 
         }
         recyclerViewPayments.layoutManager = LinearLayoutManager(requireContext())
-        recyclerViewPayments.adapter = this.paramsAdapter
+        recyclerViewPayments.adapter = this.paymentsAdapter
 
     }
 

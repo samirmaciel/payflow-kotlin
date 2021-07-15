@@ -5,16 +5,21 @@ import android.graphics.PorterDuff
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.lifecycle.observe
 import com.samirmaciel.payflow_kotlin.R
 import com.samirmaciel.payflow_kotlin.databinding.ActivityHomeBinding
 import com.samirmaciel.payflow_kotlin.modules.mypayments.MyPaymentsSlipsFragment
 import com.samirmaciel.payflow_kotlin.modules.mystatiments.MyStatimentsFragment
 import com.samirmaciel.payflow_kotlin.modules.register.RegisterActivity
+import com.samirmaciel.payflow_kotlin.shared.data.AppDataBase
+import com.samirmaciel.payflow_kotlin.shared.data.PaymentSlipDataSource
 import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : AppCompatActivity(){
 
-    private val viewModel : HomeViewModel by viewModels()
+    private val viewModel : HomeViewModel by viewModels({
+        HomeViewModel.HomeViewModelFactory(PaymentSlipDataSource(AppDataBase.getDatabase(this).PaymentSlipDao()))
+    })
 
     private lateinit var binding : ActivityHomeBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,6 +59,21 @@ class HomeActivity : AppCompatActivity(){
             }
         }
 
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        viewModel.findAllPaymentSlip()
+        viewModel.paymentslipList.observe(this, {list ->
+            countPayments(list.size)
+        })
+
+    }
+
+
+    private fun countPayments(count : Int){
+        textCardPayments.text = "Você possui $count boletos cadastrados para pagar"
     }
 
 

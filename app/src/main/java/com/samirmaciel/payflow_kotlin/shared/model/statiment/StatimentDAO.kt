@@ -9,7 +9,7 @@ interface StatimentDAO {
     suspend fun save(statiment : StatimentEntity)
 
     @Query("SELECT * FROM statimententity")
-    suspend fun findAll() : List<StatimentEntity>
+    suspend fun findAll() : MutableList<StatimentEntity>
 
     @Query("SELECT * FROM statimententity WHERE id = :id")
     suspend fun findById(id : Long) : StatimentEntity

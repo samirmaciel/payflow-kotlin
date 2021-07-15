@@ -110,7 +110,7 @@
                 android:background="@color/body" />
 
             <TextView
-                android:id="@+id/textCardCadastrados"
+                android:id="@+id/textCardPayments"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"

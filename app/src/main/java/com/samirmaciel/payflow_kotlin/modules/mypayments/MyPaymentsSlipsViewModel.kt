@@ -16,6 +16,9 @@ class MyPaymentsSlipsViewModel(private val paymentSlipRepository: PaymentSlipRep
 
     private var index = 0
 
+    init {
+        findAllPaymentSlip()
+    }
 
     fun findAllPaymentSlip(){
         viewModelScope.launch {

@@ -8,7 +8,7 @@ interface StatimentRepository {
 
     suspend fun findById(id : Long) : Statiment
 
-    suspend fun findAll() : List<Statiment>
+    suspend fun findAll() : MutableList<Statiment>
 
     suspend fun deleteById(id: Long)
 }

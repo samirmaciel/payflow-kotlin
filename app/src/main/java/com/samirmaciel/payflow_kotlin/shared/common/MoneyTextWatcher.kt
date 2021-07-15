@@ -4,17 +4,11 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import com.google.android.material.textfield.TextInputEditText
+import java.lang.NumberFormatException
 import java.text.NumberFormat
 
 
 class MoneyTextWatcher( val editText : TextInputEditText) : TextWatcher{
-
-
-
-
-    private var current = ""
-
-
 
 
     override fun afterTextChanged(editable: Editable?) {
@@ -27,18 +21,26 @@ class MoneyTextWatcher( val editText : TextInputEditText) : TextWatcher{
     }
 
     override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-        var cleanString : String = s.toString().replace("R$" , "").replace(".", "").replace(",","").trim()
+        if(!s.toString().isEmpty()){
+            editText.removeTextChangedListener(this)
 
-        var parsed : Double = cleanString.toDouble()
-        var input : Double = parsed / 100
+            var cleanString = s.toString().replace("[R$,.]".toRegex(), "").replace("\\s+".toRegex(), "")
 
+            if(cleanString.length != 0){
+                try {
+                    var parsed : Double
+                    var formatted : String
+                    parsed = cleanString.toDouble()
+                    formatted = NumberFormat.getCurrencyInstance().format(parsed / 100)
 
+                    editText.setText(formatted)
+                    editText.setSelection(formatted.length)
+                }catch (e : NumberFormatException){
 
-        Log.d("TESTE",  NumberFormat.getCurrencyInstance().format(input))
-
-        this.current = NumberFormat.getCurrencyInstance().format(input)
-
-
+                }
+            }
+            editText.addTextChangedListener(this)
+        }
     }
 
 }

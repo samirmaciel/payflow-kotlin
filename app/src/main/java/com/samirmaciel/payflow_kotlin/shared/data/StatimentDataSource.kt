@@ -15,11 +15,11 @@ class StatimentDataSource( private val statimentDao : StatimentDAO) : StatimentR
         return statimentDao.findById(id).toStatiment()
     }
 
-    override suspend fun findAll(): List<Statiment> {
+    override suspend fun findAll(): MutableList<Statiment> {
         val statimentEntityList = statimentDao.findAll()
-        var statimentList : List<Statiment> = listOf()
+        var statimentList : MutableList<Statiment> = ArrayList()
         for (statiment in statimentEntityList){
-            statimentList.toMutableList().add(statiment.toStatiment())
+            statimentList.add(statiment.toStatiment())
         }
         return statimentList
     }
