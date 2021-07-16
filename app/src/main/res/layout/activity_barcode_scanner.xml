@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".modules.barcodescanner.BarcodeScannerActivity">
+
+
+    <com.budiyev.android.codescanner.CodeScannerView
+        android:id="@+id/scannerContainer"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:maskColor="#50000000"
+        app:frameAspectRatioWidth="10"
+        app:frameAspectRatioHeight="4"
+        app:autoFocusButtonVisible="false"
+        app:flashButtonVisible="true"
+
+        app:layout_constraintBottom_toTopOf="@+id/buttonInsertBarcode"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/buttonInsertBarcode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:outlineProvider="none"
+        android:text="Inserir código de barras"
+        android:fontFamily="@font/inter"
+        android:textSize="15sp"
+        android:textColor="@color/heading"
+        android:backgroundTint="@color/background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

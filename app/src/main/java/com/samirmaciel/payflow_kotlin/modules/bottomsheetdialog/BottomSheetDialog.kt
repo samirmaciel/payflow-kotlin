@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.bottomsheet.*
 
 class BottomSheetDialog : BottomSheetDialogFragment() {
 
-    private val homeViewModel : HomeViewModel by activityViewModels()
+    private val viewModelHome : HomeViewModel by activityViewModels()
     private val viewModelPayments : MyPaymentsSlipsViewModel by activityViewModels()
     private val viewModel : BottomSheetDialogViewModel by activityViewModels({
         BottomSheetDialogViewModel.BottomSheetDialogViewModelFactory(PaymentSlipDataSource(AppDataBase.getDatabase(requireContext()).PaymentSlipDao()), StatimentDataSource(AppDataBase.getDatabase(requireContext()).StatimentDao()))
@@ -41,6 +41,7 @@ class BottomSheetDialog : BottomSheetDialogFragment() {
 
         buttonYes.setOnClickListener{
             viewModel.saveStatiment(id)
+            viewModelHome.findAllPaymentSlip()
             viewModelPayments.deleteById(id)
             dismiss()
         }
@@ -50,7 +51,7 @@ class BottomSheetDialog : BottomSheetDialogFragment() {
 
         buttonDelete.setOnClickListener{
             viewModelPayments.deleteById(id)
-            homeViewModel.findAllPaymentSlip()
+            viewModelHome.findAllPaymentSlip()
             dismiss()
         }
 

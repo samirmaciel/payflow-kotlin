@@ -85,6 +85,7 @@
                     android:gravity="center_vertical">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/inputName"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:maxLines="1"
@@ -141,6 +142,7 @@
                     android:gravity="center_vertical">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/inputDueDate"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:maxLines="1"
@@ -150,7 +152,7 @@
                         android:fontFamily="@font/inter"
                         android:textColor="@color/body"
                         android:textSize="15sp"
-                        android:hint="01/01/21"/>
+                        android:hint="00/00/00"/>
 
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
@@ -198,7 +200,7 @@
                     android:gravity="center_vertical">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/testeInput"
+                        android:id="@+id/inputWallet"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:maxLines="1"
@@ -256,14 +258,16 @@
                     android:gravity="center_vertical">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/inputBarcode"
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:maxLines="1"
-                        android:textColorHint="@color/inputs"
+                        android:layout_height="60dp"
+                        android:ellipsize="start"
                         android:fontFamily="@font/inter"
+                        android:hint="Código de barras"
+                        android:maxLines="4"
                         android:textColor="@color/body"
-                        android:textSize="15sp"
-                        android:hint="Código de barras"/>
+                        android:textColorHint="@color/inputs"
+                        android:textSize="15sp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
@@ -302,28 +306,27 @@
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/buttonCancel"
-                android:layout_width="wrap_content"
+                android:layout_width="140dp"
                 android:layout_height="wrap_content"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                android:layout_marginRight="50dp"
                 android:fontFamily="@font/inter"
-                android:textSize="15sp"
+                android:textSize="12sp"
                 android:text="Cancelar"/>
 
             <View
                 android:layout_width="2dp"
                 android:layout_height="match_parent"
+                android:layout_marginHorizontal="20dp"
                 android:background="@color/stroke"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/buttonRegister"
-                android:layout_width="wrap_content"
+                android:layout_width="140dp"
                 android:layout_height="wrap_content"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:textColor="@color/primaryColor"
                 android:fontFamily="@font/inter"
-                android:textSize="15sp"
-                android:layout_marginLeft="50dp"
+                android:textSize="12sp"
                 android:text="Cadastrar"/>
 
 

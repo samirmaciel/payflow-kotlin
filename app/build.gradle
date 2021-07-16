@@ -3,6 +3,7 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'kotlin-android-extensions'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -55,11 +56,20 @@ dependencies {
     kapt"androidx.room:room-compiler:$room_version"
     implementation"androidx.room:room-ktx:$room_version"
 
+    implementation platform('com.google.firebase:firebase-bom:28.2.1')
+    implementation 'com.google.android.gms:play-services-auth:19.0.0'
+    implementation 'com.budiyev.android:code-scanner:2.1.0'
+
+    implementation 'me.dm7.barcodescanner:zxing:1.9.13'
+    implementation "com.journeyapps:zxing-android-embedded:3.5.0@aar"
+    implementation 'com.karumi:dexter:6.2.3'
+
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.2.0"
     implementation "androidx.activity:activity-ktx:1.1.0"
     implementation "androidx.fragment:fragment-ktx:1.2.4"
     
     implementation 'me.abhinay.input:currency-edittext:1.1'
+    implementation 'com.squareup.picasso:picasso:2.71828'
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.2.0'

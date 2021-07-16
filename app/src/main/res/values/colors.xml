@@ -10,4 +10,5 @@
     <color name="stroke"> #FFE3E3E5</color>
     <color name="boxes">#FFFAFAFC</color>
     <color name="background">#FFFFFFFF</color>
+    <color name="verde">#27AE60</color>
 </resources>

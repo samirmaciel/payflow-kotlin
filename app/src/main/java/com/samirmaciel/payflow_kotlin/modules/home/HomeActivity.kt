@@ -1,19 +1,24 @@
 package com.samirmaciel.payflow_kotlin.modules.home
 
 import android.content.Intent
-import android.graphics.PorterDuff
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 import androidx.activity.viewModels
 import androidx.lifecycle.observe
+import com.google.android.material.snackbar.Snackbar
 import com.samirmaciel.payflow_kotlin.R
-import com.samirmaciel.payflow_kotlin.databinding.ActivityHomeBinding
+import com.samirmaciel.payflow_kotlin.modules.barcodescanner.BarcodeScannerActivity
 import com.samirmaciel.payflow_kotlin.modules.mypayments.MyPaymentsSlipsFragment
 import com.samirmaciel.payflow_kotlin.modules.mystatiments.MyStatimentsFragment
 import com.samirmaciel.payflow_kotlin.modules.register.RegisterActivity
 import com.samirmaciel.payflow_kotlin.shared.data.AppDataBase
 import com.samirmaciel.payflow_kotlin.shared.data.PaymentSlipDataSource
+import com.samirmaciel.payflow_kotlin.shared.model.datarepository.RegistrationViewParams
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_home.*
+
 
 class HomeActivity : AppCompatActivity(){
 
@@ -21,11 +26,10 @@ class HomeActivity : AppCompatActivity(){
         HomeViewModel.HomeViewModelFactory(PaymentSlipDataSource(AppDataBase.getDatabase(this).PaymentSlipDao()))
     })
 
-    private lateinit var binding : ActivityHomeBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityHomeBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setContentView(R.layout.activity_home)
 
         if(savedInstanceState == null){
             supportFragmentManager.beginTransaction()
@@ -34,7 +38,7 @@ class HomeActivity : AppCompatActivity(){
         }
 
         buttonAdd.setOnClickListener{
-            startActivity(Intent(this,  RegisterActivity::class.java))
+            startActivity(Intent(this,  BarcodeScannerActivity::class.java))
         }
 
         buttonHome.setOnClickListener{
@@ -63,6 +67,17 @@ class HomeActivity : AppCompatActivity(){
 
     override fun onStart() {
         super.onStart()
+
+        val userName = intent.getStringExtra("name").toString()
+        val photoUrl = intent.getStringExtra("photoUrl").toString()
+
+        textUserName.text = userName
+
+        Log.d("PHOTOLOAD", "onStart: " + photoUrl)
+
+        Picasso.get().load("https://lh3.googleusercontent.com/a-/AOh14Gh3LniOV01bWE2FQO-lUp5jcvYrO2mG1twavd_bWb0").into(imageUserProfile)
+
+        Log.d("PHOTO", "onStart: " + photoUrl)
 
         viewModel.findAllPaymentSlip()
         viewModel.paymentslipList.observe(this, {list ->
