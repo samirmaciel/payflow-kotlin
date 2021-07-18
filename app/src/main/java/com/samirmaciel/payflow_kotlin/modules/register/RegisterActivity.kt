@@ -7,14 +7,16 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.AttributeSet
 import android.util.Log
+import android.view.Gravity
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.observe
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.samirmaciel.payflow_kotlin.R
-import com.samirmaciel.payflow_kotlin.databinding.ActivityRegisterBinding
 import com.samirmaciel.payflow_kotlin.modules.home.HomeActivity
 import com.samirmaciel.payflow_kotlin.shared.common.DateTextWatcher
 import com.samirmaciel.payflow_kotlin.shared.common.MoneyTextWatcher
@@ -30,10 +32,11 @@ class RegisterActivity : AppCompatActivity() {
         RegistrationViewModel.RegistrationViewModelFactory(PaymentSlipDataSource(AppDataBase.getDatabase(this).PaymentSlipDao()))
     })
 
-    @SuppressLint("ResourceType")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
+
 
         inputWallet.addTextChangedListener(
             MoneyTextWatcher(
@@ -106,6 +109,10 @@ class RegisterActivity : AppCompatActivity() {
                     && validateWallet()
                     && validateBarCode()){
                 viewModel.savePaymentSlip(getPaymentFromUI())
+                val toast = Toast.makeText(this, "Boleto cadastrado com sucesso!", Toast.LENGTH_SHORT)
+                toast.setGravity(Gravity.TOP, 0 , 0)
+                toast.view = layoutInflater.inflate(R.layout.custom_toast_sucessful, findViewById<ViewGroup>(R.id.toast_layout), false)
+                toast.show()
                 goToHomePage()
             }
         }

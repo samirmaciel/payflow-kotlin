@@ -1,6 +1,7 @@
 package com.samirmaciel.payflow_kotlin.shared.common
 
 import android.annotation.SuppressLint
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -40,7 +41,7 @@ class StatimentsRecyclerViewAdapter(private val onItemClicked : (Statiment) -> U
 
         @SuppressLint("ResourceAsColor")
         fun bind(onItemClicked: (Statiment) -> kotlin.Unit, statiment : Statiment){
-            name.setTextColor(R.color.delete)
+            name.setTextColor(Color.parseColor("#27AE60"))
             name.text = statiment.name
             dueDate.text = statiment.dueDate
             value.text = statiment.value

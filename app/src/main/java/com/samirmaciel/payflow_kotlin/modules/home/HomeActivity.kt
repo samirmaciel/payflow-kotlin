@@ -3,8 +3,14 @@ package com.samirmaciel.payflow_kotlin.modules.home
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.transition.AutoTransition
+import android.transition.TransitionManager
+import android.transition.Visibility
 import android.util.Log
+import android.view.Gravity
 import android.view.View
+import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.observe
 import com.google.android.material.snackbar.Snackbar
@@ -18,6 +24,7 @@ import com.samirmaciel.payflow_kotlin.shared.data.PaymentSlipDataSource
 import com.samirmaciel.payflow_kotlin.shared.model.datarepository.RegistrationViewParams
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_home.*
+import kotlinx.android.synthetic.main.activity_register.*
 
 
 class HomeActivity : AppCompatActivity(){
@@ -38,11 +45,14 @@ class HomeActivity : AppCompatActivity(){
         }
 
         buttonAdd.setOnClickListener{
-            startActivity(Intent(this,  RegisterActivity::class.java))
+
+            startActivity(Intent(this,  BarcodeScannerActivity::class.java))
         }
 
         buttonHome.setOnClickListener{
             if(viewModel.index != 0){
+//                TransitionManager.beginDelayedTransition(constraint_home, AutoTransition())
+//                countPaymentsCardView.visibility = View.VISIBLE
                 supportFragmentManager.beginTransaction()
                         .replace(R.id.homeContainer, MyPaymentsSlipsFragment())
                         .commitAllowingStateLoss()
@@ -54,6 +64,8 @@ class HomeActivity : AppCompatActivity(){
 
         buttonList.setOnClickListener{
             if(viewModel.index != 1){
+//                TransitionManager.beginDelayedTransition(constraint_home, AutoTransition())
+//                countPaymentsCardView.visibility = View.GONE
                 supportFragmentManager.beginTransaction()
                         .replace(R.id.homeContainer, MyStatimentsFragment())
                         .commitAllowingStateLoss()
@@ -67,6 +79,9 @@ class HomeActivity : AppCompatActivity(){
 
     override fun onStart() {
         super.onStart()
+
+
+
 
         val userName = intent.getStringExtra("name").toString()
         val photoUrl = intent.getStringExtra("photoUrl").toString()

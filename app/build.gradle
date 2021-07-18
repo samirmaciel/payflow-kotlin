@@ -64,6 +64,8 @@ dependencies {
     implementation "com.journeyapps:zxing-android-embedded:3.5.0@aar"
     implementation 'com.karumi:dexter:6.2.3'
 
+    implementation 'com.airbnb.android:lottie:2.8.0'
+
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.2.0"
     implementation "androidx.activity:activity-ktx:1.1.0"
     implementation "androidx.fragment:fragment-ktx:1.2.4"

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/constraint_home"
     tools:context=".modules.home.HomeActivity">
 
 
@@ -87,7 +88,7 @@
     </FrameLayout>
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/materialCardView"
+        android:id="@+id/countPaymentsCardView"
         android:layout_width="327dp"
         android:layout_height="80dp"
         android:layout_marginTop="120dp"
