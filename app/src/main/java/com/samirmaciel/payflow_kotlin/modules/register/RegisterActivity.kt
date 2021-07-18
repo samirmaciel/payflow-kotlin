@@ -1,8 +1,11 @@
 package com.samirmaciel.payflow_kotlin.modules.register
 
+import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.AttributeSet
 import android.util.Log
 import android.view.View
 import android.widget.Button
@@ -18,22 +21,19 @@ import com.samirmaciel.payflow_kotlin.shared.common.MoneyTextWatcher
 import com.samirmaciel.payflow_kotlin.shared.data.AppDataBase
 import com.samirmaciel.payflow_kotlin.shared.data.PaymentSlipDataSource
 import com.samirmaciel.payflow_kotlin.shared.model.datarepository.RegistrationViewParams
+import com.samirmaciel.payflow_kotlin.shared.model.paymentslip.PaymentSlip
 import kotlinx.android.synthetic.main.activity_register.*
 
 class RegisterActivity : AppCompatActivity() {
-
-
 
     private val viewModel : RegistrationViewModel by viewModels({
         RegistrationViewModel.RegistrationViewModelFactory(PaymentSlipDataSource(AppDataBase.getDatabase(this).PaymentSlipDao()))
     })
 
-
-
+    @SuppressLint("ResourceType")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
-
 
         inputWallet.addTextChangedListener(
             MoneyTextWatcher(
@@ -51,17 +51,9 @@ class RegisterActivity : AppCompatActivity() {
             setTextColor(resources.getColor(R.color.verde))
         }
 
-
-
         buttonCancel.setOnClickListener{
-
-            val intent = Intent(this, HomeActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-            startActivity(intent)
+            goToHomePage()
         }
-
-
-
 
     }
 
@@ -111,28 +103,24 @@ class RegisterActivity : AppCompatActivity() {
 
         buttonRegister.setOnClickListener(){
             if(validateName() && validateDueDate()
-                && validateWallet()
-                && validateBarCode()){
-                val registrationViewParams : RegistrationViewParams = RegistrationViewParams(name = inputName.text.toString(),
+                    && validateWallet()
+                    && validateBarCode()){
+                viewModel.savePaymentSlip(getPaymentFromUI())
+                goToHomePage()
+            }
+        }
+    }
+
+    private fun getPaymentFromUI() : RegistrationViewParams {
+            return RegistrationViewParams(name = inputName.text.toString(),
                     dueDate = inputDueDate.text.toString(),
                     value = inputWallet.text.toString(),
                     barcode = inputBarcode.text.toString())
+    }
 
-                viewModel.savePaymentSlip(registrationViewParams)
-            }
-
-
-
-            val intent = Intent(this, HomeActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(intent)
-
-        }
-
-        viewModel.paymentList.observe(this, { lives ->
-            Log.d("OBSERVE", "onStart: " + lives.size)
-        })
-
-
+    private fun goToHomePage(){
+        val intent = Intent(this, HomeActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
     }
 }

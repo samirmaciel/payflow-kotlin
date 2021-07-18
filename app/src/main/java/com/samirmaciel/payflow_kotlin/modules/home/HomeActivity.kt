@@ -38,7 +38,7 @@ class HomeActivity : AppCompatActivity(){
         }
 
         buttonAdd.setOnClickListener{
-            startActivity(Intent(this,  BarcodeScannerActivity::class.java))
+            startActivity(Intent(this,  RegisterActivity::class.java))
         }
 
         buttonHome.setOnClickListener{
