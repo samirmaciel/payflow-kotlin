@@ -1,5 +1,6 @@
 package com.samirmaciel.payflow_kotlin.modules.splash
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -16,16 +17,12 @@ class SplashActivity : AppCompatActivity() {
         setContentView(R.layout.activity_splash)
 
         Handler().postDelayed({
+
             val account = GoogleSignIn.getLastSignedInAccount(this)
 
+
             if(account != null){
-
-                val intent = Intent(this, HomeActivity::class.java)
-
-                Log.d("SUPLA", "onCreate: " + account.photoUrl)
-                intent.putExtra("name", account.displayName)
-                intent.putExtra("photoUrl", account.photoUrl.toString())
-                startActivity(intent)
+                startActivity(Intent(this, HomeActivity::class.java))
             }else{
                 startActivity(Intent(this, LoginActivity::class.java))
             }

@@ -64,13 +64,12 @@ class BarcodeScannerActivity : AppCompatActivity() {
         }
 
         codeScanner.decodeCallback = DecodeCallback {
-            Log.d("RESULTADO", "result : " + it.resultMetadata?.toString())
 
             gotToRegisterActivity(it.text)
         }
 
         codeScanner.errorCallback  = ErrorCallback {
-            Log.d("RESULTADO", "Error : " + it.message.toString())
+
             gotToHome()
 
         }
@@ -87,6 +86,7 @@ class BarcodeScannerActivity : AppCompatActivity() {
     }
 
     private fun makeRequestPermissions(){
+        codeScanner.stopPreview()
         ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.CAMERA), CAMERA_REQUEST_CODE)
     }
 
@@ -104,22 +104,7 @@ class BarcodeScannerActivity : AppCompatActivity() {
 
         startActivity(intent)
     }
-
-
-    override fun onStart() {
-        super.onStart()
-
-    }
-
-    override fun onPause() {
-        codeScanner.releaseResources()
-        super.onPause()
-    }
-
-    override fun onDestroy() {
-        codeScanner.releaseResources()
-        super.onDestroy()
-    }
+    
 
 
     override fun onRequestPermissionsResult(
@@ -128,12 +113,15 @@ class BarcodeScannerActivity : AppCompatActivity() {
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
         when(requestCode){
 
             CAMERA_REQUEST_CODE -> {
                 if(grantResults.isEmpty() || grantResults[0] != PackageManager.PERMISSION_GRANTED){
                     Toast.makeText(this, "Você precisa aceitar as permissões para utilizar este app", Toast.LENGTH_SHORT).show()
                 }else{
+
+                    codeScanner.startPreview()
                     //sucessful
                 }
             }

@@ -1,6 +1,8 @@
 package com.samirmaciel.payflow_kotlin.modules.home
 
+import android.content.Context
 import android.content.Intent
+import android.media.MediaCodec.MetricsConstants.MODE
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.transition.AutoTransition
@@ -13,6 +15,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.observe
+import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.material.snackbar.Snackbar
 import com.samirmaciel.payflow_kotlin.R
 import com.samirmaciel.payflow_kotlin.modules.barcodescanner.BarcodeScannerActivity
@@ -80,19 +83,11 @@ class HomeActivity : AppCompatActivity(){
     override fun onStart() {
         super.onStart()
 
+        val account = GoogleSignIn.getLastSignedInAccount(this)
 
+        textUserName.text = account?.displayName.toString()
+        Picasso.get().load(account?.photoUrl.toString()).into(imageUserProfile)
 
-
-        val userName = intent.getStringExtra("name").toString()
-        val photoUrl = intent.getStringExtra("photoUrl").toString()
-
-        textUserName.text = userName
-
-        Log.d("PHOTOLOAD", "onStart: " + photoUrl)
-
-        Picasso.get().load("https://lh3.googleusercontent.com/a-/AOh14Gh3LniOV01bWE2FQO-lUp5jcvYrO2mG1twavd_bWb0").into(imageUserProfile)
-
-        Log.d("PHOTO", "onStart: " + photoUrl)
 
         viewModel.findAllPaymentSlip()
         viewModel.paymentslipList.observe(this, {list ->

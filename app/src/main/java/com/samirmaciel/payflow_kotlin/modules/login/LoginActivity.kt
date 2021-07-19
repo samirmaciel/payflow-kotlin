@@ -1,5 +1,6 @@
 package com.samirmaciel.payflow_kotlin.modules.login
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -55,10 +56,14 @@ class LoginActivity : AppCompatActivity() {
             try {
                 // Google Sign In was successful, authenticate with Firebase
                 val account = task.getResult(ApiException::class.java)!!
-                val intent = Intent(this, HomeActivity::class.java)
-                intent.putExtra("name", account.displayName)
-                intent.putExtra("photoUrl", account.photoUrl)
-                startActivity(intent)
+
+                val sharedPref = getPreferences(Context.MODE_PRIVATE)
+                with(sharedPref.edit()){
+                    putString("userName" , account.displayName.toString())
+                    putString("photoURL", account.photoUrl.toString())
+                    commit()
+                }
+                startActivity(Intent(this, HomeActivity::class.java))
 
             } catch (e: ApiException) {
                 // Google Sign In failed, update UI appropriately
