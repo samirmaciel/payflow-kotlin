@@ -13,6 +13,7 @@ import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.samirmaciel.payflow_kotlin.R
+import com.samirmaciel.payflow_kotlin.modules.bottomsheetdialog_statiment.BottomSheetDialogStatiment
 import com.samirmaciel.payflow_kotlin.shared.common.StatimentsRecyclerViewAdapter
 import com.samirmaciel.payflow_kotlin.shared.data.AppDataBase
 import com.samirmaciel.payflow_kotlin.shared.data.StatimentDataSource
@@ -58,7 +59,12 @@ class MyStatimentsFragment : Fragment() {
 
     private fun initRecycler() {
         this.statimentsAdapter = StatimentsRecyclerViewAdapter{
-            Snackbar.make(requireView(), it.name, Snackbar.LENGTH_SHORT).show()
+            val bottomSheet = BottomSheetDialogStatiment()
+            val bundle = Bundle()
+            bundle.putString("name", it.name)
+            bundle.putLong("id", it.id)
+            bottomSheet.arguments = bundle
+            bottomSheet.show(childFragmentManager, "BottomSheetStatiments")
         }
         recyclerViewStatiments.layoutManager = LinearLayoutManager(requireContext())
         recyclerViewStatiments.adapter = this.statimentsAdapter

@@ -3,8 +3,10 @@ package com.samirmaciel.payflow_kotlin.modules.home
 import android.content.Context
 import android.content.Intent
 import android.media.MediaCodec.MetricsConstants.MODE
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Html
 import android.transition.AutoTransition
 import android.transition.TransitionManager
 import android.transition.Visibility
@@ -14,6 +16,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.observe
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.material.snackbar.Snackbar
@@ -48,7 +51,6 @@ class HomeActivity : AppCompatActivity(){
         }
 
         buttonAdd.setOnClickListener{
-
             startActivity(Intent(this,  BarcodeScannerActivity::class.java))
         }
 
@@ -82,7 +84,6 @@ class HomeActivity : AppCompatActivity(){
 
     override fun onStart() {
         super.onStart()
-
         val account = GoogleSignIn.getLastSignedInAccount(this)
 
         textUserName.text = account?.displayName.toString()
@@ -93,12 +94,17 @@ class HomeActivity : AppCompatActivity(){
         viewModel.paymentslipList.observe(this, {list ->
             countPayments(list.size)
         })
-
     }
 
 
     private fun countPayments(count : Int){
-        textCardPayments.text = "Você possui $count boletos cadastrados para pagar"
+        var boleto = if(count <= 1) "boleto" else "boletos"
+        var cadastrado = if(count <= 1) "cadastrado" else "cadastrados"
+        var num = if(count == 0) "nenhum" else "$count"
+        var text = "Você possui <b>$num $boleto</b> $cadastrado para pagar"
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            textCardPayments.text = Html.fromHtml(text, Html.FROM_HTML_MODE_COMPACT)
+        }
     }
 
 

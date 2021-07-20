@@ -4,6 +4,7 @@ package com.samirmaciel.payflow_kotlin.modules.barcodescanner
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -27,23 +28,19 @@ class BarcodeScannerActivity : AppCompatActivity() {
 
     private val CAMERA_REQUEST_CODE = 94
     private lateinit var codeScanner : CodeScanner
+    private lateinit var bottomSheetBehavior: BottomSheetBehavior<*>
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_barcode_scanner)
-
-
-
-
-
         startCodeScanner()
     }
 
     override fun onStart() {
         super.onStart()
         checkPermissions()
-        val bottomSheetBehavior = BottomSheetBehavior.from(layout_bottomsheet_codescanner_fail)
+        bottomSheetBehavior = BottomSheetBehavior.from(layout_bottomsheet_codescanner_fail)
         bottomSheetBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
             }
@@ -54,12 +51,16 @@ class BarcodeScannerActivity : AppCompatActivity() {
             }
         })
         buttonInsertBarcode.setOnClickListener{
-            //gotToRegisterActivity(null)
-            bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+            gotToRegisterActivity(null)
+        }
+
+        buttonInsertCode.setOnClickListener{
+            gotToRegisterActivity(null)
         }
 
         buttonScanAgain.setOnClickListener{
             bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+            codeScanner.startPreview()
         }
     }
 
@@ -72,10 +73,17 @@ class BarcodeScannerActivity : AppCompatActivity() {
             formats = CodeScanner.ALL_FORMATS
             isAutoFocusEnabled = true
             autoFocusMode = AutoFocusMode.SAFE
-            scanMode = ScanMode.CONTINUOUS
+            scanMode = ScanMode.SINGLE
         }
         codeScanner.decodeCallback = DecodeCallback {
-            gotToRegisterActivity(it.text)
+            if(it.text.length < 44){
+                codeScanner.stopPreview()
+                bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+            }else{
+
+                gotToRegisterActivity(it.text)
+            }
+
         }
         codeScanner.errorCallback  = ErrorCallback {
             gotToHome()

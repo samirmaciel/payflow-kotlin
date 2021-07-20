@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="50dp"
+        android:layout_height="2dp"
+        android:layout_marginTop="15dp"
+        android:background="@color/inputs"/>
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonDeleteStatiment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:outlineProvider="none"
+            android:text="Deletar boleto"
+            android:textSize="15sp"
+            android:fontFamily="@font/inter"
+            android:textAllCaps="false"
+            android:textColor="@color/delete"
+            app:backgroundTint="@color/background"
+            android:background="@drawable/ripple_button_default"
+            android:drawableLeft="@drawable/ic_baseline_delete_24"/>
+
+
+    </LinearLayout>
+
+</LinearLayout>

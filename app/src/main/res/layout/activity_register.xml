@@ -242,7 +242,7 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/inputTextBarcode"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="wrap_content"
                     app:boxBackgroundMode="none"
                     app:hintAnimationEnabled="true"
                     android:layout_marginBottom="5dp"
@@ -251,11 +251,11 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/inputBarcode"
                         android:layout_width="match_parent"
-                        android:layout_height="60dp"
-                        android:ellipsize="start"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
                         android:fontFamily="@font/inter"
                         android:hint="Código de barras"
-                        android:maxLines="4"
+                        android:maxLines="2"
                         android:textColor="@color/body"
                         android:textColorHint="@color/inputs"
                         android:textSize="15sp" />
@@ -295,13 +295,16 @@
             android:gravity="center_horizontal"
             >
 
-            <androidx.appcompat.widget.AppCompatButton
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/buttonCancel"
                 android:layout_width="140dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/ripple_button_default"
                 android:fontFamily="@font/inter"
+                app:backgroundTint="@color/background"
                 android:textSize="12sp"
+                android:outlineProvider="none"
+                android:textColor="@color/heading"
                 android:text="Cancelar"/>
 
             <View
@@ -316,6 +319,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/ripple_button_default"
                 android:textColor="@color/primaryColor"
+                app:backgroundTint="@color/background"
                 android:fontFamily="@font/inter"
                 android:textSize="12sp"
                 android:text="Cadastrar"/>

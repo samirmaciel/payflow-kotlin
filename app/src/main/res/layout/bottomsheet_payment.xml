@@ -19,7 +19,7 @@
         android:layout_marginTop="20dp"
         android:textAlignment="center"
         android:textSize="20sp"
-        android:fontFamily="@font/lexend"
+        android:fontFamily="@font/lexendregular"
         android:textColor="@color/heading"
         android:text="O Boleto Tia Maria no valor de R$ 568,00 já foi pago?"/>
 
@@ -70,7 +70,7 @@
         android:orientation="horizontal">
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/buttonDelete"
+            android:id="@+id/buttonDeletePayment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:outlineProvider="none"

@@ -1,7 +1,6 @@
 package com.samirmaciel.payflow_kotlin.modules.mypayments
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +9,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.samirmaciel.payflow_kotlin.R
-import com.samirmaciel.payflow_kotlin.modules.bottomsheetdialog.BottomSheetDialog
+import com.samirmaciel.payflow_kotlin.modules.bottomsheetdialog_payment.BottomSheetDialogPayment
 import com.samirmaciel.payflow_kotlin.shared.common.PaymentsRecyclerViewAdapter
 import com.samirmaciel.payflow_kotlin.shared.data.AppDataBase
 import com.samirmaciel.payflow_kotlin.shared.data.PaymentSlipDataSource
@@ -60,14 +59,14 @@ class MyPaymentsSlipsFragment : Fragment(){
     private fun initRecyclerView(){
 
         this.paymentsAdapter = PaymentsRecyclerViewAdapter{ paymentSlip ->
-            val bottomSheet = BottomSheetDialog()
+            val bottomSheet = BottomSheetDialogPayment()
             val bundle = Bundle()
             bundle.putString("name", paymentSlip.name)
             bundle.putString("value", paymentSlip.value)
             bundle.putLong("id", paymentSlip.id)
             bottomSheet.arguments = bundle
 
-            bottomSheet.show(childFragmentManager, "BottomSheetDialog")
+            bottomSheet.show(childFragmentManager, "BottomSheetPayments")
 
         }
         recyclerViewPayments.layoutManager = LinearLayoutManager(requireContext())
