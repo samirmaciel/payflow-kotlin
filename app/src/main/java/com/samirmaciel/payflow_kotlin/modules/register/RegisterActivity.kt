@@ -49,9 +49,11 @@ class RegisterActivity : AppCompatActivity() {
         ))
 
         inputBarcode.apply {
-            setText(intent.getStringExtra("result"))
-            isEnabled = false
-            setTextColor(resources.getColor(R.color.verde))
+            if(intent.getStringExtra("result") != null) {
+                setText(intent.getStringExtra("result"))
+                isEnabled = false
+                setTextColor(resources.getColor(R.color.verde))
+            }
         }
 
         buttonCancel.setOnClickListener{
@@ -129,5 +131,10 @@ class RegisterActivity : AppCompatActivity() {
         val intent = Intent(this, HomeActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        goToHomePage()
     }
 }

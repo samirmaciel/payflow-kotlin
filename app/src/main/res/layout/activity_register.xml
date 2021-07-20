@@ -299,7 +299,7 @@
                 android:id="@+id/buttonCancel"
                 android:layout_width="140dp"
                 android:layout_height="wrap_content"
-                android:background="?attr/selectableItemBackgroundBorderless"
+                android:background="@drawable/ripple_button_default"
                 android:fontFamily="@font/inter"
                 android:textSize="12sp"
                 android:text="Cancelar"/>
@@ -314,7 +314,7 @@
                 android:id="@+id/buttonRegister"
                 android:layout_width="140dp"
                 android:layout_height="wrap_content"
-                android:background="?attr/selectableItemBackgroundBorderless"
+                android:background="@drawable/ripple_button_default"
                 android:textColor="@color/primaryColor"
                 android:fontFamily="@font/inter"
                 android:textSize="12sp"

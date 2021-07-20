@@ -30,31 +30,29 @@
         android:orientation="horizontal"
         android:gravity="center_horizontal">
 
-        <com.google.android.material.button.MaterialButton
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/buttonNotYet"
-            app:strokeWidth="1dp"
+            app:strokeWidth="4dp"
             android:outlineProvider="none"
             android:layout_width="140dp"
-            android:layout_height="70dp"
+            android:layout_height="60dp"
             android:fontFamily="@font/inter"
             android:textColor="@color/heading"
             android:textSize="15sp"
-            app:strokeColor="#E3E3E5"
             android:text="Ainda não"
-            android:backgroundTint="@color/background"/>
+            android:background="@drawable/ripple_button_default" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/buttonYes"
             android:layout_width="140dp"
-            android:layout_height="70dp"
-            android:outlineProvider="none"
+            android:layout_height="60dp"
             android:layout_marginLeft="20sp"
+            android:background="@drawable/ripple_button_primarycolor"
             android:fontFamily="@font/inter"
-            android:textColor="@color/background"
-            android:textSize="15sp"
-            app:strokeColor="@color/primaryColor"
+            android:outlineProvider="none"
             android:text="Sim"
-            android:backgroundTint="@color/primaryColor"/>
+            android:textColor="@color/background"
+            android:textSize="15sp" />
     </LinearLayout>
 
     <View
@@ -81,7 +79,8 @@
             android:fontFamily="@font/inter"
             android:textAllCaps="false"
             android:textColor="@color/delete"
-            android:backgroundTint="@color/background"
+            app:backgroundTint="@color/background"
+            android:background="@drawable/ripple_button_default"
             android:drawableLeft="@drawable/ic_baseline_delete_24"/>
 
 

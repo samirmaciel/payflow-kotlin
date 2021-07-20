@@ -88,8 +88,8 @@ class HomeActivity : AppCompatActivity(){
         textUserName.text = account?.displayName.toString()
         Picasso.get().load(account?.photoUrl.toString()).into(imageUserProfile)
 
-
         viewModel.findAllPaymentSlip()
+
         viewModel.paymentslipList.observe(this, {list ->
             countPayments(list.size)
         })

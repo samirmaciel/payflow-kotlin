@@ -4,6 +4,7 @@ package com.samirmaciel.payflow_kotlin.modules.barcodescanner
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -13,11 +14,13 @@ import com.budiyev.android.codescanner.CodeScanner
 import com.budiyev.android.codescanner.DecodeCallback
 import com.budiyev.android.codescanner.ErrorCallback
 import com.budiyev.android.codescanner.ScanMode
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.samirmaciel.payflow_kotlin.R
 import com.samirmaciel.payflow_kotlin.modules.home.HomeActivity
 import com.samirmaciel.payflow_kotlin.modules.register.RegisterActivity
 import kotlinx.android.synthetic.main.activity_barcode_scanner.*
-
+import kotlinx.android.synthetic.main.bottomsheet_barcodescanner.*
+import java.util.*
 
 
 class BarcodeScannerActivity : AppCompatActivity() {
@@ -30,12 +33,34 @@ class BarcodeScannerActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_barcode_scanner)
 
+
+
+
+
         startCodeScanner()
     }
 
     override fun onStart() {
         super.onStart()
         checkPermissions()
+        val bottomSheetBehavior = BottomSheetBehavior.from(layout_bottomsheet_codescanner_fail)
+        bottomSheetBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+            }
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                if(newState == BottomSheetBehavior.STATE_DRAGGING){
+                    bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+                }
+            }
+        })
+        buttonInsertBarcode.setOnClickListener{
+            //gotToRegisterActivity(null)
+            bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+        }
+
+        buttonScanAgain.setOnClickListener{
+            bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+        }
     }
 
 
@@ -77,7 +102,7 @@ class BarcodeScannerActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    fun gotToRegisterActivity(result : String){
+    fun gotToRegisterActivity(result : String?){
         val intent = Intent(this, RegisterActivity::class.java)
         intent.putExtra("result" , result)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
