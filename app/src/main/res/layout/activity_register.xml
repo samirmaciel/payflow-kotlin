@@ -315,6 +315,7 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/buttonRegister"
+                android:outlineProvider="none"
                 android:layout_width="140dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/ripple_button_default"

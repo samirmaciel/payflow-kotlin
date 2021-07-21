@@ -1,12 +1,19 @@
 package com.samirmaciel.payflow_kotlin.modules.bottomsheetdialog_payment
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.text.Html
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.activityViewModels
+import com.airbnb.lottie.animation.content.Content
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.samirmaciel.payflow_kotlin.R
 import com.samirmaciel.payflow_kotlin.modules.home.HomeViewModel
@@ -15,6 +22,7 @@ import com.samirmaciel.payflow_kotlin.shared.data.AppDataBase
 import com.samirmaciel.payflow_kotlin.shared.data.PaymentSlipDataSource
 import com.samirmaciel.payflow_kotlin.shared.data.StatimentDataSource
 import kotlinx.android.synthetic.main.bottomsheet_payment.*
+import kotlinx.android.synthetic.main.custom_toast_sucessful.*
 
 class BottomSheetDialogPayment : BottomSheetDialogFragment() {
 
@@ -36,6 +44,7 @@ class BottomSheetDialogPayment : BottomSheetDialogFragment() {
 
         val name = arguments?.get("name")
         val value = arguments?.get("value")
+        val barcode = arguments?.get("barcode").toString()
         val id = arguments?.get("id").toString().toLong()
 
         var text = "O Boleto <b>$name</b> no valor de <b>$value</b> já foi pago?"
@@ -58,8 +67,29 @@ class BottomSheetDialogPayment : BottomSheetDialogFragment() {
             viewModelPayments.deleteById(id)
             viewModelHome.findAllPaymentSlip()
             dismiss()
+
         }
 
+        buttonCoyCode.setOnClickListener{
+            copyToClipboard(barcode)
+            val toast = Toast(requireContext())
+            val view = layoutInflater.inflate(R.layout.custom_toast_sucessful, requireActivity().findViewById<ViewGroup>(R.id.toast_layout), false)
+            view.findViewById<TextView>(R.id.textTitleToast).text = "Código de barras copiado!"
+            toast.apply {
+                setGravity(Gravity.TOP, 0 , 0)
+                duration = Toast.LENGTH_SHORT
+                setView(view)
+            }
+            toast.show()
+            dismiss()
+        }
+
+    }
+
+    private fun copyToClipboard(text : String){
+        val clipboard = requireActivity().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        val clip = ClipData.newPlainText(text, text)
+        clipboard.setPrimaryClip(clip)
     }
 
 

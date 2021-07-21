@@ -63,6 +63,7 @@ class MyPaymentsSlipsFragment : Fragment(){
             val bundle = Bundle()
             bundle.putString("name", paymentSlip.name)
             bundle.putString("value", paymentSlip.value)
+            bundle.putString("barcode", paymentSlip.barcode)
             bundle.putLong("id", paymentSlip.id)
             bottomSheet.arguments = bundle
 

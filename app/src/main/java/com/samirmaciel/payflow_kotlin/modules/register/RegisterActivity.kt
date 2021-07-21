@@ -149,9 +149,12 @@ class RegisterActivity : AppCompatActivity() {
                     && validateWallet()
                     && validateBarCode()){
                 viewModel.savePaymentSlip(getPaymentFromUI())
-                val toast = Toast.makeText(this, "Boleto cadastrado com sucesso!", Toast.LENGTH_SHORT)
-                toast.setGravity(Gravity.TOP, 0 , 0)
-                toast.view = layoutInflater.inflate(R.layout.custom_toast_sucessful, findViewById<ViewGroup>(R.id.toast_layout), false)
+                val toast = Toast(this)
+                toast.apply {
+                    setGravity(Gravity.TOP, 0 , 0)
+                    duration = Toast.LENGTH_SHORT
+                    view = layoutInflater.inflate(R.layout.custom_toast_sucessful, findViewById<ViewGroup>(R.id.toast_layout), false)
+                }
                 toast.show()
                 goToHomePage()
             }

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:gravity="center_horizontal"
+    android:gravity="center"
     android:orientation="vertical">
 
     <View
@@ -22,6 +22,19 @@
         android:fontFamily="@font/lexendregular"
         android:textColor="@color/heading"
         android:text="O Boleto Tia Maria no valor de R$ 568,00 já foi pago?"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/buttonCoyCode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/ripple_button_default"
+        android:fontFamily="@font/inter"
+        android:outlineProvider="none"
+        android:text="Copiar código de barras"
+        app:backgroundTint="@color/background"
+        android:textColor="@color/heading"
+        android:textSize="12sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
