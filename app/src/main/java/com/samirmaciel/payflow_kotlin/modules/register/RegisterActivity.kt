@@ -3,6 +3,7 @@ package com.samirmaciel.payflow_kotlin.modules.register
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.AttributeSet
@@ -13,6 +14,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.observe
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
@@ -25,6 +27,13 @@ import com.samirmaciel.payflow_kotlin.shared.data.PaymentSlipDataSource
 import com.samirmaciel.payflow_kotlin.shared.model.datarepository.RegistrationViewParams
 import com.samirmaciel.payflow_kotlin.shared.model.paymentslip.PaymentSlip
 import kotlinx.android.synthetic.main.activity_register.*
+import java.lang.Exception
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.util.*
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -72,11 +81,39 @@ class RegisterActivity : AppCompatActivity() {
         return true
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun validateDueDate() : Boolean {
-        var nameText : String = inputDueDate.text.toString().trim()
+        var dateText : String = inputDueDate.text.toString().trim()
+        var mounthString = "" + dateText[3] + dateText[4]
+        var dayString = "" + dateText[0] + dateText[1]
 
-        if(nameText.isEmpty()){
-            inputDueDate.error = "Insira a data de vencimento"
+        val mounth : Int
+        val day : Int
+
+        try{
+            mounth = mounthString.toInt()
+            day = dayString.toInt()
+        }catch (e : Exception){
+            return false
+        }
+
+        var dayCheck = 31
+        when(mounth){
+            1 -> { dayCheck = 31}
+            2 -> { dayCheck = 28 }
+            3 -> { dayCheck = 31 }
+            4 -> { dayCheck = 30}
+            5 -> { dayCheck = 31 }
+            6 -> { dayCheck = 30 }
+            7 -> { dayCheck = 31}
+            8 -> { dayCheck = 31 }
+            9 -> { dayCheck = 30 }
+            10 -> { dayCheck = 31}
+            11 -> { dayCheck = 30 }
+            12 -> { dayCheck = 31 }
+        }
+        if(dateText.isEmpty() || mounth > 13 || day > dayCheck){
+            inputDueDate.error = "Insira a data válida"
             return false
         }
         return true
@@ -103,6 +140,7 @@ class RegisterActivity : AppCompatActivity() {
     }
 
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onStart() {
         super.onStart()
 

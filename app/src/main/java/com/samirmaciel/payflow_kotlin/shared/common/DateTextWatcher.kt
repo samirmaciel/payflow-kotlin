@@ -27,7 +27,7 @@ class DateTextWatcher(private val editText: TextInputEditText) : TextWatcher {
             if (!lastChar.equals("/")) {
                 editText.append("/")
             } else {
-                Log.d("DIFERENTE", "DIFERENTE")
+
                 editText.text?.delete(sizeEditText - 1, sizeEditText - 1)
             }
         }else if(sizeEditText == 3){
