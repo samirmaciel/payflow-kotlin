@@ -6,6 +6,7 @@ import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.text.Html
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -13,7 +14,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
-import com.airbnb.lottie.animation.content.Content
+import androidx.fragment.app.viewModels
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.samirmaciel.payflow_kotlin.R
 import com.samirmaciel.payflow_kotlin.modules.home.HomeViewModel
@@ -22,15 +23,15 @@ import com.samirmaciel.payflow_kotlin.shared.data.AppDataBase
 import com.samirmaciel.payflow_kotlin.shared.data.PaymentSlipDataSource
 import com.samirmaciel.payflow_kotlin.shared.data.StatimentDataSource
 import kotlinx.android.synthetic.main.bottomsheet_payment.*
-import kotlinx.android.synthetic.main.custom_toast_sucessful.*
+
 
 class BottomSheetDialogPayment : BottomSheetDialogFragment() {
 
     private val viewModelHome : HomeViewModel by activityViewModels()
     private val viewModelPayments : MyPaymentsSlipsViewModel by activityViewModels()
-    private val paymentViewModel : BottomSheetDialogPaymentViewModel by activityViewModels({
+    private val viewModelThis: BottomSheetDialogPaymentViewModel by activityViewModels {
         BottomSheetDialogPaymentViewModel.BottomSheetDialogViewModelFactory(PaymentSlipDataSource(AppDataBase.getDatabase(requireContext()).PaymentSlipDao()), StatimentDataSource(AppDataBase.getDatabase(requireContext()).StatimentDao()))
-    })
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -54,9 +55,9 @@ class BottomSheetDialogPayment : BottomSheetDialogFragment() {
         }
 
         buttonYes.setOnClickListener{
-            paymentViewModel.saveStatiment(id)
-            viewModelHome.findAllPaymentSlip()
+            viewModelThis.saveStatiment(id)
             viewModelPayments.deleteById(id)
+            viewModelHome.findAllPaymentSlip()
             dismiss()
         }
         buttonNotYet.setOnClickListener{

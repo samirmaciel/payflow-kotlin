@@ -14,6 +14,12 @@ class HomeViewModel(private val paymentSlipRepository: PaymentSlipRepository): V
     var index = 0
 
 
+
+    init {
+        findAllPaymentSlip()
+    }
+
+
     fun findAllPaymentSlip(){
         viewModelScope.launch {
             paymentslipList.postValue((paymentSlipRepository.findAll()))

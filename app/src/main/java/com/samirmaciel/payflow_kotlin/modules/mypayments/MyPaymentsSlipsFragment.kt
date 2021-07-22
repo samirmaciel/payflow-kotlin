@@ -48,10 +48,16 @@ class MyPaymentsSlipsFragment : Fragment(){
     override fun onStart() {
         super.onStart()
 
-        viewModel.paymentslipList.observe(this, { list ->
+
+        viewModel.paymentslipList.observe(this) { list ->
+            if(list.size > 0){
+                textMessageStart.visibility = View.GONE
+            }else{
+                textMessageStart.visibility = View.VISIBLE
+            }
             paymentsAdapter.setItemList(list)
             paymentsAdapter.notifyDataSetChanged()
-        })
+        }
 
     }
 

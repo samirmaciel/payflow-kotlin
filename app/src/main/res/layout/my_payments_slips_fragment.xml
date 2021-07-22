@@ -6,6 +6,20 @@
     android:layout_height="match_parent"
     tools:context=".modules.mypayments.MyPaymentsSlipsFragment">
 
+
+    <TextView
+        android:id="@+id/textMessageStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="150dp"
+        android:fontFamily="@font/inter"
+        android:text="Adicione um novo boleto"
+        android:textColor="@color/inputs"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textMyPayments" />
+
     <TextView
         android:id="@+id/textMyPayments"
         android:layout_width="wrap_content"
