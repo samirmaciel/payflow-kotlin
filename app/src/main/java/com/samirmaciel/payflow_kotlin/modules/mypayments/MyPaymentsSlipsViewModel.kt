@@ -1,7 +1,5 @@
 package com.samirmaciel.payflow_kotlin.modules.mypayments
 
-import android.util.Log
-import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -14,13 +12,11 @@ class MyPaymentsSlipsViewModel(private val paymentSlipRepository: PaymentSlipRep
 
     val paymentslipList = MutableLiveData<MutableList<PaymentSlip>>()
 
-    private var index = 0
-
     init {
-        findAllPaymentSlip()
+        updatePaymentList()
     }
 
-    fun findAllPaymentSlip(){
+    fun updatePaymentList(){
         viewModelScope.launch {
             paymentslipList.postValue((paymentSlipRepository.findAll()))
         }
@@ -30,19 +26,13 @@ class MyPaymentsSlipsViewModel(private val paymentSlipRepository: PaymentSlipRep
     fun deleteById(id : Long){
         viewModelScope.launch {
             paymentSlipRepository.deleteById(id)
-            findAllPaymentSlip()
+            updatePaymentList()
         }
-
-
     }
-
 
     class PaymenteViewModelFactory(private val paymentSlipRepository: PaymentSlipRepository) : ViewModelProvider.Factory{
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             return MyPaymentsSlipsViewModel(paymentSlipRepository) as T
         }
-
-
     }
-
 }

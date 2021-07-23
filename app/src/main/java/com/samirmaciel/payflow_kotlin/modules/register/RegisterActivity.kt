@@ -46,7 +46,6 @@ class RegisterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
-
         inputWallet.addTextChangedListener(
             MoneyTextWatcher(
                 inputWallet
@@ -68,7 +67,6 @@ class RegisterActivity : AppCompatActivity() {
         buttonCancel.setOnClickListener{
             goToHomePage()
         }
-
     }
 
     private fun validateName() : Boolean {

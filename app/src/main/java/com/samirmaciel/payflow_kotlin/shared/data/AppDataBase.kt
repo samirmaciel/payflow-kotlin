@@ -16,7 +16,6 @@ abstract class AppDataBase : RoomDatabase() {
     abstract fun StatimentDao() : StatimentDAO
 
     companion object {
-
         @Volatile
         private var INSTANCE : AppDataBase? = null
 

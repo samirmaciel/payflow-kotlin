@@ -21,16 +21,15 @@ import kotlinx.android.synthetic.main.my_statiments_fragment.*
 
 class MyStatimentsFragment : Fragment() {
 
-    private val viewModel : MyStatimentsViewModel by activityViewModels({
+    private val viewModel : MyStatimentsViewModel by activityViewModels {
         MyStatimentsViewModel.StatimentViewModelFactory(StatimentDataSource(AppDataBase.getDatabase(requireContext()).StatimentDao()))
-    })
+    }
     private lateinit var statimentsAdapter : StatimentsRecyclerViewAdapter
 
     companion object {
         fun newInstance() =
             MyStatimentsFragment()
     }
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,14 +46,11 @@ class MyStatimentsFragment : Fragment() {
     override fun onStart() {
         super.onStart()
 
-
-
-        viewModel.statimentList.observe(this, {list ->
+        viewModel.statimentList.observe(this) { list ->
             countStatiments(list.size)
             statimentsAdapter.setItemList(list)
             statimentsAdapter.notifyDataSetChanged()
-        })
-
+        }
     }
 
     private fun initRecycler() {
@@ -73,6 +69,4 @@ class MyStatimentsFragment : Fragment() {
     private fun countStatiments(count : Int){
         textTotalStatiments.text = "$count pagos no total"
     }
-
-
 }

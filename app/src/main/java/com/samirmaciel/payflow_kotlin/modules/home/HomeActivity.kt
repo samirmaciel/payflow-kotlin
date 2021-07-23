@@ -22,10 +22,9 @@ import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : AppCompatActivity(){
 
-    private val viewModel : HomeViewModel by viewModels({
+    private val viewModel : HomeViewModel by viewModels {
         HomeViewModel.HomeViewModelFactory(PaymentSlipDataSource(AppDataBase.getDatabase(this).PaymentSlipDao()))
-    })
-
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,33 +40,31 @@ class HomeActivity : AppCompatActivity(){
             startActivity(Intent(this,  BarcodeScannerActivity::class.java))
         }
 
-
         buttonHome.setOnClickListener{
-            if(viewModel.index != 0){
-//                TransitionManager.beginDelayedTransition(constraint_home, AutoTransition())
+            if(viewModel.fragmentPage != 0){
+//                TransitionManager.beginDelayedTransition(constraint_home, AutoTransition())     --> Transitions animations
 //                countPaymentsCardView.visibility = View.VISIBLE
                 supportFragmentManager.beginTransaction()
                         .replace(R.id.homeContainer, MyPaymentsSlipsFragment())
                         .commitAllowingStateLoss()
                 buttonHome.setColorFilter(resources.getColor(R.color.primaryColor))
                 buttonList.setColorFilter(resources.getColor(R.color.heading))
-                viewModel.index = 0
+                viewModel.fragmentPage = 0
             }
         }
 
         buttonList.setOnClickListener{
-            if(viewModel.index != 1){
-//                TransitionManager.beginDelayedTransition(constraint_home, AutoTransition())
+            if(viewModel.fragmentPage != 1){
+//                TransitionManager.beginDelayedTransition(constraint_home, AutoTransition())     --> Transitions animations
 //                countPaymentsCardView.visibility = View.GONE
                 supportFragmentManager.beginTransaction()
                         .replace(R.id.homeContainer, MyStatimentsFragment())
                         .commitAllowingStateLoss()
                 buttonHome.setColorFilter(resources.getColor(R.color.heading))
                 buttonList.setColorFilter(resources.getColor(R.color.primaryColor))
-                viewModel.index = 1
+                viewModel.fragmentPage = 1
             }
         }
-
     }
 
     override fun onStart() {
@@ -76,12 +73,9 @@ class HomeActivity : AppCompatActivity(){
 
         textUserName.text = account?.displayName.toString()
         Picasso.get().load(account?.photoUrl.toString()).into(imageUserProfile)
-
-
-
-        viewModel.paymentslipList.observe(this, {list ->
+        viewModel.paymentslipList.observe(this) { list ->
             countPayments(list.size)
-        })
+        }
     }
 
 
@@ -95,6 +89,4 @@ class HomeActivity : AppCompatActivity(){
             textCardPayments.text = Html.fromHtml(text, Html.FROM_HTML_MODE_COMPACT)
         }
     }
-
-
 }

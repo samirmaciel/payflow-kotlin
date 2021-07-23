@@ -6,15 +6,15 @@ import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.text.Html
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import android.app.AlertDialog
+import android.content.DialogInterface
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.samirmaciel.payflow_kotlin.R
 import com.samirmaciel.payflow_kotlin.modules.home.HomeViewModel
@@ -46,7 +46,7 @@ class BottomSheetDialogPayment : BottomSheetDialogFragment() {
         val name = arguments?.get("name")
         val value = arguments?.get("value")
         val barcode = arguments?.get("barcode").toString()
-        val id = arguments?.get("id").toString().toLong()
+        val paymentId = arguments?.get("id").toString().toLong()
 
         var text = "O Boleto <b>$name</b> no valor de <b>$value</b> já foi pago?"
 
@@ -55,9 +55,9 @@ class BottomSheetDialogPayment : BottomSheetDialogFragment() {
         }
 
         buttonYes.setOnClickListener{
-            viewModelThis.saveStatiment(id)
-            viewModelPayments.deleteById(id)
-            viewModelHome.findAllPaymentSlip()
+            viewModelThis.saveStatiment(paymentId)
+            viewModelPayments.deleteById(paymentId)
+            viewModelHome.updatePaymentList()
             dismiss()
         }
         buttonNotYet.setOnClickListener{
@@ -65,9 +65,20 @@ class BottomSheetDialogPayment : BottomSheetDialogFragment() {
         }
 
         buttonDeletePayment.setOnClickListener{
-            viewModelPayments.deleteById(id)
-            viewModelHome.findAllPaymentSlip()
-            dismiss()
+            val alert = AlertDialog.Builder(requireContext())
+            alert.apply {
+                setTitle("Deseja excluir este boleto?")
+                setPositiveButton("Sim", DialogInterface.OnClickListener { dialog, id ->
+                    viewModelPayments.deleteById(paymentId)
+                    viewModelHome.updatePaymentList()
+                    this@BottomSheetDialogPayment.dismiss()
+                })
+                setNegativeButton("Não", DialogInterface.OnClickListener { dialog, id ->
+                    dismiss()
+                    this@BottomSheetDialogPayment.dismiss()
+               })
+            }
+            alert.create().show()
 
         }
 

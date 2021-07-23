@@ -12,14 +12,11 @@ class MyStatimentsViewModel(private val repository: StatimentRepository) : ViewM
 
     var statimentList : MutableLiveData<MutableList<Statiment>> = MutableLiveData()
 
-
     init {
-
-        findAllStatiments()
+        updateStatimentList()
     }
 
-
-    fun findAllStatiments(){
+    fun updateStatimentList(){
         viewModelScope.launch {
             statimentList.postValue(repository.findAll())
         }
@@ -33,13 +30,9 @@ class MyStatimentsViewModel(private val repository: StatimentRepository) : ViewM
         }
     }
 
-
-
     class StatimentViewModelFactory(private val repository: StatimentRepository) : ViewModelProvider.Factory{
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             return MyStatimentsViewModel(repository) as T
         }
-
-
     }
 }

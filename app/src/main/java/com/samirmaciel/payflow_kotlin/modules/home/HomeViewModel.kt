@@ -11,30 +11,21 @@ import kotlinx.coroutines.launch
 class HomeViewModel(private val paymentSlipRepository: PaymentSlipRepository): ViewModel() {
 
     val paymentslipList = MutableLiveData<MutableList<PaymentSlip>>()
-    var index = 0
-
-
+    var fragmentPage = 0
 
     init {
-        findAllPaymentSlip()
+        updatePaymentList()
     }
 
-
-    fun findAllPaymentSlip(){
+    fun updatePaymentList(){
         viewModelScope.launch {
             paymentslipList.postValue((paymentSlipRepository.findAll()))
         }
-
     }
-
 
     class HomeViewModelFactory(private val paymentSlipRepository: PaymentSlipRepository) : ViewModelProvider.Factory{
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             return HomeViewModel(paymentSlipRepository) as T
         }
-
-
     }
-
-
 }

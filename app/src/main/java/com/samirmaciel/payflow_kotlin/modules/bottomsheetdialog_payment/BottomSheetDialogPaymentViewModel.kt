@@ -10,8 +10,6 @@ import kotlinx.coroutines.launch
 
 class BottomSheetDialogPaymentViewModel(private val paymentRepository: PaymentSlipRepository, private val statimentRepository: StatimentRepository) : ViewModel() {
 
-
-
     fun deleteById(id : Long){
         viewModelScope.launch {
             paymentRepository.deleteById(id)
@@ -23,14 +21,6 @@ class BottomSheetDialogPaymentViewModel(private val paymentRepository: PaymentSl
             statimentRepository.save(paymentRepository.findById(paymentID).toRegistrationViewParms())
         }
     }
-
-
-
-
-
-
-
-
 
     class BottomSheetDialogViewModelFactory(private val paymentyRepository: PaymentSlipRepository, private val statimentRepository: StatimentRepository ) : ViewModelProvider.Factory{
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
