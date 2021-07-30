@@ -256,6 +256,7 @@
                         android:fontFamily="@font/inter"
                         android:hint="Código de barras"
                         android:maxLines="2"
+                        android:inputType="number"
                         android:textColor="@color/body"
                         android:textColorHint="@color/inputs"
                         android:textSize="15sp" />

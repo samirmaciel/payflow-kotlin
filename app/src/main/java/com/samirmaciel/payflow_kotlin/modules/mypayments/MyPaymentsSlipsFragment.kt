@@ -68,6 +68,7 @@ class MyPaymentsSlipsFragment : Fragment(){
             bundle.putString("value", paymentSlip.value)
             bundle.putString("barcode", paymentSlip.barcode)
             bundle.putLong("id", paymentSlip.id)
+            bundle.putInt("listSize", paymentsAdapter.getItemList().size)
             bottomSheet.arguments = bundle
 
             bottomSheet.show(childFragmentManager, "BottomSheetPayments")

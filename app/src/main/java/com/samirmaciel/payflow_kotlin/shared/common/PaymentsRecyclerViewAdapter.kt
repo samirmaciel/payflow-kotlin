@@ -15,9 +15,6 @@ class PaymentsRecyclerViewAdapter(private val onItemClicked : (PaymentSlip) -> U
 
     private var itemList : List<PaymentSlip> = ArrayList()
 
-
-
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         return MyViewHolder(
                 LayoutInflater.from(parent.context).inflate(R.layout.paymentslip_item, parent, false)
@@ -28,7 +25,6 @@ class PaymentsRecyclerViewAdapter(private val onItemClicked : (PaymentSlip) -> U
         return itemList.size
 
     }
-
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -68,6 +64,10 @@ class PaymentsRecyclerViewAdapter(private val onItemClicked : (PaymentSlip) -> U
 
     fun setItemList(list : List<PaymentSlip>){
         this.itemList = list
+    }
+
+    fun getItemList() : List<PaymentSlip>{
+        return this.itemList
     }
 
 }

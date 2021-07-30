@@ -47,6 +47,7 @@ class BottomSheetDialogPayment : BottomSheetDialogFragment() {
         val value = arguments?.get("value")
         val barcode = arguments?.get("barcode").toString()
         val paymentId = arguments?.get("id").toString().toLong()
+        val itemListSize = arguments?.get("listSize").toString().toInt()
 
         var text = "O Boleto <b>$name</b> no valor de <b>$value</b> já foi pago?"
 
@@ -70,7 +71,7 @@ class BottomSheetDialogPayment : BottomSheetDialogFragment() {
                 setTitle("Deseja excluir este boleto?")
                 setPositiveButton("Sim", DialogInterface.OnClickListener { dialog, id ->
                     viewModelPayments.deleteById(paymentId)
-                    viewModelHome.updatePaymentList()
+                    viewModelHome.updatePayments(itemListSize - 1)
                     this@BottomSheetDialogPayment.dismiss()
                 })
                 setNegativeButton("Não", DialogInterface.OnClickListener { dialog, id ->

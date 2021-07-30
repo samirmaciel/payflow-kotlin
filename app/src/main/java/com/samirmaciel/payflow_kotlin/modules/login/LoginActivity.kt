@@ -20,12 +20,10 @@ import kotlinx.android.synthetic.main.activity_login.*
 class LoginActivity : AppCompatActivity() {
 
     private val RC_SIGN_IN = 100
-    private val viewModel : LoginViewModel by viewModels()
     private lateinit var googleSignInClient: GoogleSignInClient
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-
 
     }
 
@@ -35,9 +33,7 @@ class LoginActivity : AppCompatActivity() {
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestEmail()
             .build()
-
         googleSignInClient = GoogleSignIn.getClient(this, gso)
-
         btnEntrar.setOnClickListener {
             signIn()
         }
@@ -67,7 +63,7 @@ class LoginActivity : AppCompatActivity() {
 
             } catch (e: ApiException) {
                 // Google Sign In failed, update UI appropriately
-                Log.w("ERROU", "Google sign in failed" + e.message.toString())
+                Log.w("ERROR", "Google sign in failed" + e.message.toString())
             }
         }
     }

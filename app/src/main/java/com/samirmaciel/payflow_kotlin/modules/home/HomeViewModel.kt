@@ -11,6 +11,7 @@ import kotlinx.coroutines.launch
 class HomeViewModel(private val paymentSlipRepository: PaymentSlipRepository): ViewModel() {
 
     val paymentslipList = MutableLiveData<MutableList<PaymentSlip>>()
+    val payments = MutableLiveData<Int>()
     var fragmentPage = 0
 
     init {
@@ -21,6 +22,10 @@ class HomeViewModel(private val paymentSlipRepository: PaymentSlipRepository): V
         viewModelScope.launch {
             paymentslipList.postValue((paymentSlipRepository.findAll()))
         }
+    }
+
+    fun updatePayments(listSize : Int){
+        payments.value = listSize
     }
 
     class HomeViewModelFactory(private val paymentSlipRepository: PaymentSlipRepository) : ViewModelProvider.Factory{

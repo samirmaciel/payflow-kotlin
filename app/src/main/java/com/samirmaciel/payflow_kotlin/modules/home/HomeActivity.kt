@@ -22,6 +22,7 @@ import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : AppCompatActivity(){
 
+    // Obtendo uma instância do nosso viewModel, passando o repositório com a class HomeViewModelFactory
     private val viewModel : HomeViewModel by viewModels {
         HomeViewModel.HomeViewModelFactory(PaymentSlipDataSource(AppDataBase.getDatabase(this).PaymentSlipDao()))
     }
@@ -30,18 +31,22 @@ class HomeActivity : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
+
+        // Condição para verificar se HomeActivity está sendo criada pela primeira vez
         if(savedInstanceState == null){
-            supportFragmentManager.beginTransaction()
+            supportFragmentManager.beginTransaction() // Instânciando nosso MyPaymentFragment no Container para exibi-lo na activity
                 .add(R.id.homeContainer, MyPaymentsSlipsFragment())
                 .commitAllowingStateLoss()
         }
 
+        // Escutando o evento de click do botão central de nossa NavigationBottom
         buttonAdd.setOnClickListener{
-            startActivity(Intent(this,  BarcodeScannerActivity::class.java))
+            startActivity(Intent(this,  BarcodeScannerActivity::class.java)) // Chamando nossa Activity para leitura do código de barras
         }
 
+        // Escutando o evento de clic do botão Home de nossa NavigationBottom
         buttonHome.setOnClickListener{
-            if(viewModel.fragmentPage != 0){
+            if(viewModel.fragmentPage != 0){ //Condição que verifica se o Fragmento Mypayment já está sendo exibido
 //                TransitionManager.beginDelayedTransition(constraint_home, AutoTransition())     --> Transitions animations
 //                countPaymentsCardView.visibility = View.VISIBLE
                 supportFragmentManager.beginTransaction()
@@ -73,8 +78,13 @@ class HomeActivity : AppCompatActivity(){
 
         textUserName.text = account?.displayName.toString()
         Picasso.get().load(account?.photoUrl.toString()).into(imageUserProfile)
+
         viewModel.paymentslipList.observe(this) { list ->
             countPayments(list.size)
+        }
+
+        viewModel.payments.observe(this) { size ->
+            countPayments(size)
         }
     }
 
