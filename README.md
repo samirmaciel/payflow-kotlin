@@ -72,3 +72,8 @@ Design desenvolvido por Tiago Luchtenberg. Link para o figma abaixo 👇👇
 
 
 <br />
+
+## Arquitetura 🗼
+Para esse app foi utilizado o padrão [***MVVM (Model View View-Model)***](https://developer.android.com/jetpack/docs/guide#recommended-app-arch).
+
+![](https://github.com/TheCodeMonks/Notes-App/blob/master/screenshots/ANDROID%20ROOM%20DB%20DIAGRAM.jpg)
